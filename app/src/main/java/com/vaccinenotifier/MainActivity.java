@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), BroadcastReceiverImpl.class);
         final PendingIntent pIntent = PendingIntent.getBroadcast(this, BroadcastReceiverImpl.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 2000, pIntent);
+        alarm.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), getResources().getInteger(R.integer.cronIntervalMs), pIntent);
     }
 
     private void refreshAlertDetails() {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String newLine = getString(R.string.newLine);
         TextView textView = findViewById(R.id.alertDetails);
-        textView.setText("District Name : " + slotConstraints.getDistrictName() + newLine + "Age: " + slotConstraints.getAge() + newLine + "Vaccine: " + slotConstraints.getVaccine() + newLine + "Fee Type: " + slotConstraints.getFeeType() + newLine + "Dose: " + slotConstraints.getDose() + newLine);
+        textView.setText("District Name: " + slotConstraints.getDistrictName() + newLine + "Age: " + slotConstraints.getAge() + newLine + "Vaccine: " + slotConstraints.getVaccine() + newLine + "Fee Type: " + slotConstraints.getFeeType() + newLine + "Dose: " + slotConstraints.getDose() + newLine);
         populateSharedPrefDataToUi(slotConstraints.getDistrictSpinnerPosition(), slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose());
     }
 

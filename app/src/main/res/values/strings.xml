@@ -22,6 +22,7 @@
     <string name="defaultFeeType" />
     <string name="defaultDose">Dose1</string>
 
+    <integer name="cronIntervalMs">600000</integer>
     <string name="alertsSharedPreferencesName">Alerts</string>
     <string name="availableCentersJson">availableCentersJson</string>
 
