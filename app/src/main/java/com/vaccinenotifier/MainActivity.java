@@ -11,12 +11,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.vaccinenotifier.bean.VaccineConstraints;
+import com.vaccinenotifier.bean.SlotConstraints;
 import com.vaccinenotifier.service.BroadcastReceiverImpl;
 
 import java.util.ArrayList;
@@ -45,18 +46,18 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPreferences.getAll().size() == 0) {
             return;
         }
-        int age = sharedPreferences.getInt(VaccineConstraints.age.name(), 18);
-        String vaccine = sharedPreferences.getString(VaccineConstraints.vaccine.name(), "");
-        String feeType = sharedPreferences.getString(VaccineConstraints.feeType.name(), "");
-        String dose = sharedPreferences.getString(VaccineConstraints.dose.name(), "");
+        SlotConstraints slotConstraints = SlotConstraints.buildBySharedPref(sharedPreferences, getResources());
 
         final String newLine = getString(R.string.newLine);
         TextView textView = findViewById(R.id.alertDetails);
-        textView.setText("age: " + age + newLine + "vaccine: " + vaccine + newLine + "feeType: " + feeType + newLine + "dose: " + dose + newLine);
-        populateSharedPrefDataToUi(age, vaccine, feeType, dose);
+        textView.setText("District Name : " + slotConstraints.getDistrictName() + newLine + "Age: " + slotConstraints.getAge() + newLine + "Vaccine: " + slotConstraints.getVaccine() + newLine + "Fee Type: " + slotConstraints.getFeeType() + newLine + "Dose: " + slotConstraints.getDose() + newLine);
+        populateSharedPrefDataToUi(slotConstraints.getDistrictSpinnerPosition(), slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose());
     }
 
-    private void populateSharedPrefDataToUi(int age, String vaccine, String feeType, String dose) {
+    private void populateSharedPrefDataToUi(Integer districtSpinnerPosition, int age, String vaccine, String feeType, String dose) {
+        Spinner spinner = findViewById(R.id.districtNames);
+        spinner.setSelection(districtSpinnerPosition);
+
         if (age == getResources().getInteger(R.integer.age18)) {
             checkRadioBox(R.id.age18);
         } else if (age == getResources().getInteger(R.integer.age45)) {
@@ -111,17 +112,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createAlert(View view) {
-        String age = getRadioBoxValueFromGroup(R.id.age);
-        String vaccine = getCheckBoxValues(Arrays.asList(R.id.COVISHIELD, R.id.COVAXIN, R.id.SPUTNIK));
-        String feeType = getCheckBoxValues(Arrays.asList(R.id.feeTypeFree, R.id.feeTypePaid));
-        String dose = getRadioBoxValueFromGroup(R.id.dose);
+        Spinner spinner = findViewById(R.id.districtNames);
+        int spinnerPosition = spinner.getSelectedItemPosition();
+        if (spinnerPosition == 0) {
+            Toast.makeText(MainActivity.this, getString(R.string.districtEmpty), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SlotConstraints slotConstraints = SlotConstraints.builder()
+                .districtName(spinner.getSelectedItem().toString())
+                .districtId(getResources().getIntArray(R.array.districtIds)[spinnerPosition])
+                .districtSpinnerPosition(spinnerPosition)
+                .age(Integer.parseInt(getRadioBoxValueFromGroup(R.id.age)))
+                .vaccine(getCheckBoxValues(Arrays.asList(R.id.COVISHIELD, R.id.COVAXIN, R.id.SPUTNIK)))
+                .feeType(getCheckBoxValues(Arrays.asList(R.id.feeTypeFree, R.id.feeTypePaid)))
+                .dose(getRadioBoxValueFromGroup(R.id.dose)).build();
 
         SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putInt(VaccineConstraints.age.name(), Integer.parseInt(age));
-        editor.putString(VaccineConstraints.vaccine.name(), vaccine);
-        editor.putString(VaccineConstraints.feeType.name(), feeType);
-        editor.putString(VaccineConstraints.dose.name(), dose);
+        editor.putString(SlotConstraints.Fields.districtName, slotConstraints.getDistrictName());
+        editor.putInt(SlotConstraints.Fields.districtId, slotConstraints.getDistrictId());
+        editor.putInt(SlotConstraints.Fields.districtSpinnerPosition, slotConstraints.getDistrictSpinnerPosition());
+        editor.putInt(SlotConstraints.Fields.age, slotConstraints.getAge());
+        editor.putString(SlotConstraints.Fields.vaccine, slotConstraints.getVaccine());
+        editor.putString(SlotConstraints.Fields.feeType, slotConstraints.getFeeType());
+        editor.putString(SlotConstraints.Fields.dose, slotConstraints.getDose());
         editor.apply();
 
         Toast.makeText(MainActivity.this, getString(R.string.alertCreated), Toast.LENGTH_SHORT).show();

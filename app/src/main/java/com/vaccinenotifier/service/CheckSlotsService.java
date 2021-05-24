@@ -20,48 +20,49 @@ import com.vaccinenotifier.R;
 import com.vaccinenotifier.api.CoWinAsyncTask;
 import com.vaccinenotifier.bean.AvailableCenter;
 import com.vaccinenotifier.bean.GetSlotsResponse;
-import com.vaccinenotifier.bean.VaccineConstraints;
+import com.vaccinenotifier.bean.SlotConstraints;
 import com.vaccinenotifier.helper.SlotResponseHelper;
 
 import java.util.List;
 
 public class CheckSlotsService extends IntentService implements CoWinAsyncTask.ResultListener {
 
-
+    private SlotConstraints slotConstraints;
     public CheckSlotsService() {
-        super("CheckSlotsService");
+        super(CheckSlotsService.class.getSimpleName());
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-
-        String CHANNEL_ID = "vaccine_notifier_background";
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "vaccine_notifier_background", NotificationManager.IMPORTANCE_NONE);
+        String channelId = getString(R.string.backgroundNotifyChannelId);
+        NotificationChannel channel = new NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_NONE);
         ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).createNotificationChannel(channel);
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID).build();
+        Notification notification = new NotificationCompat.Builder(this, channelId).build();
         startForeground(1, notification);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        slotConstraints = getSlotConstraints();
         CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask(getResources());
-        coWinAsyncTask.doTask(this);
+        coWinAsyncTask.doTask(this, slotConstraints.getDistrictId());
         Log.i("onHandleIntent", "Service is running");
+    }
+
+    private SlotConstraints getSlotConstraints() {
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
+        if (sharedPreferences.getAll().size() == 0) {
+            return null;
+        }
+        return SlotConstraints.buildBySharedPref(sharedPreferences, getResources());
     }
 
     @Override
     public void onTaskSuccess(GetSlotsResponse result) {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
-        if (sharedPreferences.getAll().size() == 0) {
-            return;
-        }
-        int age = sharedPreferences.getInt(VaccineConstraints.age.name(), 18);
-        String vaccine = sharedPreferences.getString(VaccineConstraints.vaccine.name(), "");
-        String feeType = sharedPreferences.getString(VaccineConstraints.feeType.name(), "");
-        String dose = sharedPreferences.getString(VaccineConstraints.dose.name(), "");
-        List<AvailableCenter> availableCenters = SlotResponseHelper.filter(result, age, vaccine, feeType, dose);
+        List<AvailableCenter> availableCenters = SlotResponseHelper.filter(result, slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose());
         if (availableCenters.size() == 0) {
+            Log.i("onTaskSuccess", getString(R.string.noCentersAvailable));
             return;
         }
         Log.i("onTaskSuccess", availableCenters.size() + " centers available");
@@ -74,23 +75,23 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
         Intent centersIntent = new Intent(this, CentersActivity.class);
         Gson gson = new Gson();
         String availableCentersJson = gson.toJson(availableCenters);
-        centersIntent.putExtra("availableCentersJson", availableCentersJson);
+        centersIntent.putExtra(getString(R.string.availableCentersJson), availableCentersJson);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 123, centersIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        String CHANNEL_ID = "vaccine_notifier";
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Vaccine Notifier", NotificationManager.IMPORTANCE_HIGH);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, getResources().getInteger(R.integer.notifyId), centersIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        String channelId = getString(R.string.notifyChannelId);
+        NotificationChannel channel = new NotificationChannel(channelId, getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
         ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channelId)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_background)
-                .setContentTitle(availableCenters.size() + " Centers Available!!, Click/Expand to check centers")
+                .setContentTitle(availableCenters.size() + getString(R.string.notificationTitle))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText.toString()))
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(123, mBuilder.build());
+        notificationManager.notify(getResources().getInteger(R.integer.notifyId), mBuilder.build());
     }
 }

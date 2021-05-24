@@ -13,7 +13,7 @@ import java.util.Date;
 
 import retrofit2.Response;
 
-public class CoWinAsyncTask extends AsyncTask<Void, Void, Object> {
+public class CoWinAsyncTask extends AsyncTask<Integer, Void, Object> {
 
     private final Resources resources;
     private ResultListener listener;
@@ -22,19 +22,20 @@ public class CoWinAsyncTask extends AsyncTask<Void, Void, Object> {
         this.resources = resources;
     }
 
-    public void doTask(ResultListener listener) {
+    public void doTask(ResultListener listener, Integer districtId) {
         this.listener = listener;
-        this.execute();
+        this.execute(districtId);
     }
 
     @Override
-    protected Object doInBackground(Void... voids) {
+    protected Object doInBackground(Integer... params) {
+        Integer districtId = params[0];
         GetSlotsResponse slotResponse = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(resources.getString(R.string.coWinDateFormat));
         String todayDate = simpleDateFormat.format(new Date(System.currentTimeMillis()));
         try {
             Response<GetSlotsResponse> getSlotsResponse = RetrofitClientInstance.getRetrofitInstance(resources.getString(R.string.coWinBaseUrl))
-                    .create(CoWin.class).getSlots("392", todayDate, System.getProperty(resources.getString(R.string.httpAgent)))
+                    .create(CoWin.class).getSlots(districtId, todayDate, System.getProperty(resources.getString(R.string.httpAgent)))
                     .execute();
             int responseCode = getSlotsResponse.code();
             if (responseCode == 200) {
