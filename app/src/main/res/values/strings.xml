@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Vaccine Notifier</string>
+    <string name="age18">18</string>
+    <string name="age45">45</string>
+    <string name="covishield">covishield</string>
+    <string name="covaxin">covaxin</string>
+    <string name="sputnik">sputnik</string>
+    <string name="freeType">free</string>
+    <string name="paidType">paid</string>
+    <string name="dose1">dose1</string>
+    <string name="dose2">dose2</string>
+    <string name="age">age</string>
+    <string name="vaccine">vaccine</string>
+    <string name="type">type</string>
+    <string name="dose">dose</string>
+    <string name="create_alert">Create Alert</string>
+    <string name="alertDetails">No alerts set</string>
 </resources>
