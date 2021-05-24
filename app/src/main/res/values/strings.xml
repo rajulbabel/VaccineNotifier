@@ -3,13 +3,24 @@
 
     <integer name="age18">18</integer>
     <integer name="age45">45</integer>
+
     <string name="COVISHIELD">COVISHIELD</string>
     <string name="COVAXIN">COVAXIN</string>
     <string name="SPUTNIK">SPUTNIK</string>
+
     <string name="feeTypeFree">Free</string>
     <string name="feeTypePaid">Paid</string>
+
     <string name="dose1">Dose1</string>
     <string name="dose2">Dose2</string>
+
+    <integer name="defaultDistrictId">0</integer>
+    <string name="defaultDistrictName" />
+    <integer name="districtSpinnerPosition">0</integer>
+    <integer name="defaultAge">18</integer>
+    <string name="defaultVaccine" />
+    <string name="defaultFeeType" />
+    <string name="defaultDose">Dose1</string>
 
     <string name="alertsSharedPreferencesName">Alerts</string>
     <string name="availableCentersJson">availableCentersJson</string>
@@ -20,8 +31,1544 @@
     <string name="createAlert">Create Alert</string>
     <string name="alertDetails">No alerts set</string>
     <string name="alertCreated">Alert Created</string>
+    <string name="districtEmpty">Please select district</string>
     <string name="centerNameDisplay">Center Name: </string>
     <string name="centerPincodeDisplay">Center Pincode: </string>
+    <string name="noCentersAvailable">No centers available</string>
+    <string name="notificationTitle">-Centers Available!!, Click/Expand to check centers</string>
+    <string name="notifyChannelId">vaccine_notifier</string>
+    <integer name="notifyId">1995</integer>
+    <string name="backgroundNotifyChannelId">vaccine_notifier_background</string>
     <string name="comma">,</string>
     <string name="newLine">\n</string>
+
+    <string-array name="districtNames">
+        <item>Select District</item>
+        <item>Thane</item>
+        <item>Nicobar</item>
+        <item>North and Middle Andaman</item>
+        <item>South Andaman</item>
+        <item>Anantapur</item>
+        <item>Chittoor</item>
+        <item>East Godavari</item>
+        <item>Guntur</item>
+        <item>Krishna</item>
+        <item>Kurnool</item>
+        <item>Prakasam</item>
+        <item>Sri Potti Sriramulu Nellore</item>
+        <item>Srikakulam</item>
+        <item>Visakhapatnam</item>
+        <item>Vizianagaram</item>
+        <item>West Godavari</item>
+        <item>YSR District, Kadapa (Cuddapah)</item>
+        <item>Anjaw</item>
+        <item>Changlang</item>
+        <item>Dibang Valley</item>
+        <item>East Kameng</item>
+        <item>East Siang</item>
+        <item>Itanagar Capital Complex</item>
+        <item>Kamle</item>
+        <item>Kra Daadi</item>
+        <item>Kurung Kumey</item>
+        <item>Lepa Rada</item>
+        <item>Lohit</item>
+        <item>Longding</item>
+        <item>Lower Dibang Valley</item>
+        <item>Lower Siang</item>
+        <item>Lower Subansiri</item>
+        <item>Namsai</item>
+        <item>Pakke Kessang</item>
+        <item>Papum Pare</item>
+        <item>Shi Yomi</item>
+        <item>Siang</item>
+        <item>Tawang</item>
+        <item>Tirap</item>
+        <item>Upper Siang</item>
+        <item>Upper Subansiri</item>
+        <item>West Kameng</item>
+        <item>West Siang</item>
+        <item>Baksa</item>
+        <item>Barpeta</item>
+        <item>Biswanath</item>
+        <item>Bongaigaon</item>
+        <item>Cachar</item>
+        <item>Charaideo</item>
+        <item>Chirang</item>
+        <item>Darrang</item>
+        <item>Dhemaji</item>
+        <item>Dhubri</item>
+        <item>Dibrugarh</item>
+        <item>Dima Hasao</item>
+        <item>Goalpara</item>
+        <item>Golaghat</item>
+        <item>Hailakandi</item>
+        <item>Hojai</item>
+        <item>Jorhat</item>
+        <item>Kamrup Metropolitan</item>
+        <item>Kamrup Rural</item>
+        <item>Karbi-Anglong</item>
+        <item>Karimganj</item>
+        <item>Kokrajhar</item>
+        <item>Lakhimpur</item>
+        <item>Majuli</item>
+        <item>Morigaon</item>
+        <item>Nagaon</item>
+        <item>Nalbari</item>
+        <item>Sivasagar</item>
+        <item>Sonitpur</item>
+        <item>South Salmara Mankachar</item>
+        <item>Tinsukia</item>
+        <item>Udalguri</item>
+        <item>West Karbi Anglong</item>
+        <item>Araria</item>
+        <item>Arwal</item>
+        <item>Aurangabad</item>
+        <item>Banka</item>
+        <item>Begusarai</item>
+        <item>Bhagalpur</item>
+        <item>Bhojpur</item>
+        <item>Buxar</item>
+        <item>Darbhanga</item>
+        <item>East Champaran</item>
+        <item>Gaya</item>
+        <item>Gopalganj</item>
+        <item>Jamui</item>
+        <item>Jehanabad</item>
+        <item>Kaimur</item>
+        <item>Katihar</item>
+        <item>Khagaria</item>
+        <item>Kishanganj</item>
+        <item>Lakhisarai</item>
+        <item>Madhepura</item>
+        <item>Madhubani</item>
+        <item>Munger</item>
+        <item>Muzaffarpur</item>
+        <item>Nalanda</item>
+        <item>Nawada</item>
+        <item>Patna</item>
+        <item>Purnia</item>
+        <item>Rohtas</item>
+        <item>Saharsa</item>
+        <item>Samastipur</item>
+        <item>Saran</item>
+        <item>Sheikhpura</item>
+        <item>Sheohar</item>
+        <item>Sitamarhi</item>
+        <item>Siwan</item>
+        <item>Supaul</item>
+        <item>Vaishali</item>
+        <item>West Champaran</item>
+        <item>Chandigarh</item>
+        <item>Balod</item>
+        <item>Baloda bazar</item>
+        <item>Balrampur</item>
+        <item>Bastar</item>
+        <item>Bemetara</item>
+        <item>Bijapur</item>
+        <item>Bilaspur</item>
+        <item>Dantewada</item>
+        <item>Dhamtari</item>
+        <item>Durg</item>
+        <item>Gariaband</item>
+        <item>Gaurela Pendra Marwahi </item>
+        <item>Janjgir-Champa</item>
+        <item>Jashpur</item>
+        <item>Kanker</item>
+        <item>Kawardha</item>
+        <item>Kondagaon</item>
+        <item>Korba</item>
+        <item>Koriya</item>
+        <item>Mahasamund</item>
+        <item>Mungeli</item>
+        <item>Narayanpur</item>
+        <item>Raigarh</item>
+        <item>Raipur</item>
+        <item>Rajnandgaon</item>
+        <item>Sukma</item>
+        <item>Surajpur</item>
+        <item>Surguja</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Central Delhi</item>
+        <item>East Delhi</item>
+        <item>New Delhi</item>
+        <item>North Delhi</item>
+        <item>North East Delhi</item>
+        <item>North West Delhi</item>
+        <item>Shahdara</item>
+        <item>South Delhi</item>
+        <item>South East Delhi</item>
+        <item>South West Delhi</item>
+        <item>West Delhi</item>
+        <item>North Goa</item>
+        <item>South Goa</item>
+        <item>Ahmedabad</item>
+        <item>Ahmedabad Corporation</item>
+        <item>Amreli</item>
+        <item>Anand</item>
+        <item>Aravalli</item>
+        <item>Banaskantha</item>
+        <item>Bharuch</item>
+        <item>Bhavnagar</item>
+        <item>Bhavnagar Corporation</item>
+        <item>Botad</item>
+        <item>Chhotaudepur</item>
+        <item>Dahod</item>
+        <item>Dang</item>
+        <item>Devbhumi Dwaraka</item>
+        <item>Gandhinagar</item>
+        <item>Gandhinagar Corporation</item>
+        <item>Gir Somnath</item>
+        <item>Jamnagar</item>
+        <item>Jamnagar Corporation</item>
+        <item>Junagadh</item>
+        <item>Junagadh Corporation</item>
+        <item>Kheda</item>
+        <item>Kutch</item>
+        <item>Mahisagar</item>
+        <item>Mehsana</item>
+        <item>Morbi</item>
+        <item>Narmada</item>
+        <item>Navsari</item>
+        <item>Panchmahal</item>
+        <item>Patan</item>
+        <item>Porbandar</item>
+        <item>Rajkot</item>
+        <item>Rajkot Corporation</item>
+        <item>Sabarkantha</item>
+        <item>Surat</item>
+        <item>Surat Corporation</item>
+        <item>Surendranagar</item>
+        <item>Tapi</item>
+        <item>Vadodara</item>
+        <item>Vadodara Corporation</item>
+        <item>Valsad</item>
+        <item>Ambala</item>
+        <item>Bhiwani</item>
+        <item>Charkhi Dadri</item>
+        <item>Faridabad</item>
+        <item>Fatehabad</item>
+        <item>Gurgaon</item>
+        <item>Hisar</item>
+        <item>Jhajjar</item>
+        <item>Jind</item>
+        <item>Kaithal</item>
+        <item>Karnal</item>
+        <item>Kurukshetra</item>
+        <item>Mahendragarh</item>
+        <item>Nuh</item>
+        <item>Palwal</item>
+        <item>Panchkula</item>
+        <item>Panipat</item>
+        <item>Rewari</item>
+        <item>Rohtak</item>
+        <item>Sirsa</item>
+        <item>Sonipat</item>
+        <item>Yamunanagar</item>
+        <item>Bilaspur</item>
+        <item>Chamba</item>
+        <item>Hamirpur</item>
+        <item>Kangra</item>
+        <item>Kinnaur</item>
+        <item>Kullu</item>
+        <item>Lahaul Spiti</item>
+        <item>Mandi</item>
+        <item>Shimla</item>
+        <item>Sirmaur</item>
+        <item>Solan</item>
+        <item>Una</item>
+        <item>Anantnag</item>
+        <item>Bandipore</item>
+        <item>Baramulla</item>
+        <item>Budgam</item>
+        <item>Doda</item>
+        <item>Ganderbal</item>
+        <item>Jammu</item>
+        <item>Kathua</item>
+        <item>Kishtwar</item>
+        <item>Kulgam</item>
+        <item>Kupwara</item>
+        <item>Poonch</item>
+        <item>Pulwama</item>
+        <item>Rajouri</item>
+        <item>Ramban</item>
+        <item>Reasi</item>
+        <item>Samba</item>
+        <item>Shopian</item>
+        <item>Srinagar</item>
+        <item>Udhampur</item>
+        <item>Bokaro</item>
+        <item>Chatra</item>
+        <item>Deoghar</item>
+        <item>Dhanbad</item>
+        <item>Dumka</item>
+        <item>East Singhbhum</item>
+        <item>Garhwa</item>
+        <item>Giridih</item>
+        <item>Godda</item>
+        <item>Gumla</item>
+        <item>Hazaribagh</item>
+        <item>Jamtara</item>
+        <item>Khunti</item>
+        <item>Koderma</item>
+        <item>Latehar</item>
+        <item>Lohardaga</item>
+        <item>Pakur</item>
+        <item>Palamu</item>
+        <item>Ramgarh</item>
+        <item>Ranchi</item>
+        <item>Sahebganj</item>
+        <item>Seraikela Kharsawan</item>
+        <item>Simdega</item>
+        <item>West Singhbhum</item>
+        <item>Bagalkot</item>
+        <item>Bangalore Rural</item>
+        <item>Bangalore Urban</item>
+        <item>BBMP</item>
+        <item>Belgaum</item>
+        <item>Bellary</item>
+        <item>Bidar</item>
+        <item>Chamarajanagar</item>
+        <item>Chikamagalur</item>
+        <item>Chikkaballapur</item>
+        <item>Chitradurga</item>
+        <item>Dakshina Kannada</item>
+        <item>Davanagere</item>
+        <item>Dharwad</item>
+        <item>Gadag</item>
+        <item>Gulbarga</item>
+        <item>Hassan</item>
+        <item>Haveri</item>
+        <item>Kodagu</item>
+        <item>Kolar</item>
+        <item>Koppal</item>
+        <item>Mandya</item>
+        <item>Mysore</item>
+        <item>Raichur</item>
+        <item>Ramanagara</item>
+        <item>Shimoga</item>
+        <item>Tumkur</item>
+        <item>Udupi</item>
+        <item>Uttar Kannada</item>
+        <item>Vijayapura</item>
+        <item>Yadgir</item>
+        <item>Alappuzha</item>
+        <item>Ernakulam</item>
+        <item>Idukki</item>
+        <item>Kannur</item>
+        <item>Kasaragod</item>
+        <item>Kollam</item>
+        <item>Kottayam</item>
+        <item>Kozhikode</item>
+        <item>Malappuram</item>
+        <item>Palakkad</item>
+        <item>Pathanamthitta</item>
+        <item>Thiruvananthapuram</item>
+        <item>Thrissur</item>
+        <item>Wayanad</item>
+        <item>Kargil</item>
+        <item>Leh</item>
+        <item>Agatti Island</item>
+        <item>Lakshadweep</item>
+        <item>Agar</item>
+        <item>Alirajpur</item>
+        <item>Anuppur</item>
+        <item>Ashoknagar</item>
+        <item>Balaghat</item>
+        <item>Barwani</item>
+        <item>Betul</item>
+        <item>Bhind</item>
+        <item>Bhopal</item>
+        <item>Burhanpur</item>
+        <item>Chhatarpur</item>
+        <item>Chhindwara</item>
+        <item>Damoh</item>
+        <item>Datia</item>
+        <item>Dewas</item>
+        <item>Dhar</item>
+        <item>Dindori</item>
+        <item>Guna</item>
+        <item>Gwalior</item>
+        <item>Harda</item>
+        <item>Hoshangabad</item>
+        <item>Indore</item>
+        <item>Jabalpur</item>
+        <item>Jhabua</item>
+        <item>Katni</item>
+        <item>Khandwa</item>
+        <item>Khargone</item>
+        <item>Mandla</item>
+        <item>Mandsaur</item>
+        <item>Morena</item>
+        <item>Narsinghpur</item>
+        <item>Neemuch</item>
+        <item>Panna</item>
+        <item>Raisen</item>
+        <item>Rajgarh</item>
+        <item>Ratlam</item>
+        <item>Rewa</item>
+        <item>Sagar</item>
+        <item>Satna</item>
+        <item>Sehore</item>
+        <item>Seoni</item>
+        <item>Shahdol</item>
+        <item>Shajapur</item>
+        <item>Sheopur</item>
+        <item>Shivpuri</item>
+        <item>Sidhi</item>
+        <item>Singrauli</item>
+        <item>Tikamgarh</item>
+        <item>Ujjain</item>
+        <item>Umaria</item>
+        <item>Vidisha</item>
+        <item>Ahmednagar</item>
+        <item>Akola</item>
+        <item>Amravati</item>
+        <item>Aurangabad </item>
+        <item>Beed</item>
+        <item>Bhandara</item>
+        <item>Buldhana</item>
+        <item>Chandrapur</item>
+        <item>Dhule</item>
+        <item>Gadchiroli</item>
+        <item>Gondia</item>
+        <item>Hingoli</item>
+        <item>Jalgaon</item>
+        <item>Jalna</item>
+        <item>Kolhapur</item>
+        <item>Latur</item>
+        <item>Mumbai</item>
+        <item>Nagpur</item>
+        <item>Nanded</item>
+        <item>Nandurbar</item>
+        <item>Nashik</item>
+        <item>Osmanabad</item>
+        <item>Palghar</item>
+        <item>Parbhani</item>
+        <item>Pune</item>
+        <item>Raigad</item>
+        <item>Ratnagiri</item>
+        <item>Sangli</item>
+        <item>Satara</item>
+        <item>Sindhudurg</item>
+        <item>Solapur</item>
+        <item>Wardha</item>
+        <item>Washim</item>
+        <item>Yavatmal</item>
+        <item>Bishnupur</item>
+        <item>Chandel</item>
+        <item>Churachandpur</item>
+        <item>Imphal East</item>
+        <item>Imphal West</item>
+        <item>Jiribam</item>
+        <item>Kakching</item>
+        <item>Kamjong</item>
+        <item>Kangpokpi</item>
+        <item>Noney</item>
+        <item>Pherzawl</item>
+        <item>Senapati</item>
+        <item>Tamenglong</item>
+        <item>Tengnoupal</item>
+        <item>Thoubal</item>
+        <item>Ukhrul</item>
+        <item>East Garo Hills</item>
+        <item>East Jaintia Hills</item>
+        <item>East Khasi Hills</item>
+        <item>North Garo Hills</item>
+        <item>Ri-Bhoi</item>
+        <item>South Garo Hills</item>
+        <item>South West Garo Hills</item>
+        <item>South West Khasi Hills</item>
+        <item>West Garo Hills</item>
+        <item>West Jaintia Hills</item>
+        <item>West Khasi Hills</item>
+        <item>Aizawl East</item>
+        <item>Aizawl West</item>
+        <item>Champhai</item>
+        <item>Kolasib</item>
+        <item>Lawngtlai</item>
+        <item>Lunglei</item>
+        <item>Mamit</item>
+        <item>Serchhip</item>
+        <item>Siaha</item>
+        <item>Dimapur</item>
+        <item>Kiphire</item>
+        <item>Kohima</item>
+        <item>Longleng</item>
+        <item>Mokokchung</item>
+        <item>Mon</item>
+        <item>Peren</item>
+        <item>Phek</item>
+        <item>Tuensang</item>
+        <item>Wokha</item>
+        <item>Zunheboto</item>
+        <item>Angul</item>
+        <item>Balangir</item>
+        <item>Balasore</item>
+        <item>Bargarh</item>
+        <item>Bhadrak</item>
+        <item>Boudh</item>
+        <item>Cuttack</item>
+        <item>Deogarh</item>
+        <item>Dhenkanal</item>
+        <item>Gajapati</item>
+        <item>Ganjam</item>
+        <item>Jagatsinghpur</item>
+        <item>Jajpur</item>
+        <item>Jharsuguda</item>
+        <item>Kalahandi</item>
+        <item>Kandhamal</item>
+        <item>Kendrapara</item>
+        <item>Kendujhar</item>
+        <item>Khurda</item>
+        <item>Koraput</item>
+        <item>Malkangiri</item>
+        <item>Mayurbhanj</item>
+        <item>Nabarangpur</item>
+        <item>Nayagarh</item>
+        <item>Nuapada</item>
+        <item>Puri</item>
+        <item>Rayagada</item>
+        <item>Sambalpur</item>
+        <item>Subarnapur</item>
+        <item>Sundargarh</item>
+        <item>Karaikal</item>
+        <item>Mahe</item>
+        <item>Puducherry</item>
+        <item>Yanam</item>
+        <item>Amritsar</item>
+        <item>Barnala</item>
+        <item>Bathinda</item>
+        <item>Faridkot</item>
+        <item>Fatehgarh Sahib</item>
+        <item>Fazilka</item>
+        <item>Ferozpur</item>
+        <item>Gurdaspur</item>
+        <item>Hoshiarpur</item>
+        <item>Jalandhar</item>
+        <item>Kapurthala</item>
+        <item>Ludhiana</item>
+        <item>Mansa</item>
+        <item>Moga</item>
+        <item>Pathankot</item>
+        <item>Patiala</item>
+        <item>Rup Nagar</item>
+        <item>Sangrur</item>
+        <item>SAS Nagar</item>
+        <item>SBS Nagar</item>
+        <item>Sri Muktsar Sahib</item>
+        <item>Tarn Taran</item>
+        <item>Ajmer</item>
+        <item>Alwar</item>
+        <item>Banswara</item>
+        <item>Baran</item>
+        <item>Barmer</item>
+        <item>Bharatpur</item>
+        <item>Bhilwara</item>
+        <item>Bikaner</item>
+        <item>Bundi</item>
+        <item>Chittorgarh</item>
+        <item>Churu</item>
+        <item>Dausa</item>
+        <item>Dholpur</item>
+        <item>Dungarpur</item>
+        <item>Hanumangarh</item>
+        <item>Jaipur I</item>
+        <item>Jaipur II</item>
+        <item>Jaisalmer</item>
+        <item>Jalore</item>
+        <item>Jhalawar</item>
+        <item>Jhunjhunu</item>
+        <item>Jodhpur</item>
+        <item>Karauli</item>
+        <item>Kota</item>
+        <item>Nagaur</item>
+        <item>Pali</item>
+        <item>Pratapgarh</item>
+        <item>Rajsamand</item>
+        <item>Sawai Madhopur</item>
+        <item>Sikar</item>
+        <item>Sirohi</item>
+        <item>Sri Ganganagar</item>
+        <item>Tonk</item>
+        <item>Udaipur</item>
+        <item>East Sikkim</item>
+        <item>North Sikkim</item>
+        <item>South Sikkim</item>
+        <item>West Sikkim</item>
+        <item>Aranthangi</item>
+        <item>Ariyalur</item>
+        <item>Attur</item>
+        <item>Chengalpet</item>
+        <item>Chennai</item>
+        <item>Cheyyar</item>
+        <item>Coimbatore</item>
+        <item>Cuddalore</item>
+        <item>Dharmapuri</item>
+        <item>Dindigul</item>
+        <item>Erode</item>
+        <item>Kallakurichi</item>
+        <item>Kanchipuram</item>
+        <item>Kanyakumari</item>
+        <item>Karur</item>
+        <item>Kovilpatti</item>
+        <item>Krishnagiri</item>
+        <item>Madurai</item>
+        <item>Nagapattinam</item>
+        <item>Namakkal</item>
+        <item>Nilgiris</item>
+        <item>Palani</item>
+        <item>Paramakudi</item>
+        <item>Perambalur</item>
+        <item>Poonamallee</item>
+        <item>Pudukkottai</item>
+        <item>Ramanathapuram</item>
+        <item>Ranipet</item>
+        <item>Salem</item>
+        <item>Sivaganga</item>
+        <item>Sivakasi</item>
+        <item>Tenkasi</item>
+        <item>Thanjavur</item>
+        <item>Theni</item>
+        <item>Thoothukudi (Tuticorin)</item>
+        <item>Tiruchirappalli</item>
+        <item>Tirunelveli</item>
+        <item>Tirupattur</item>
+        <item>Tiruppur</item>
+        <item>Tiruvallur</item>
+        <item>Tiruvannamalai</item>
+        <item>Tiruvarur</item>
+        <item>Vellore</item>
+        <item>Viluppuram</item>
+        <item>Virudhunagar</item>
+        <item>Adilabad</item>
+        <item>Bhadradri Kothagudem</item>
+        <item>Hyderabad</item>
+        <item>Jagtial</item>
+        <item>Jangaon</item>
+        <item>Jayashankar Bhupalpally</item>
+        <item>Jogulamba Gadwal</item>
+        <item>Kamareddy</item>
+        <item>Karimnagar</item>
+        <item>Khammam</item>
+        <item>Kumuram Bheem</item>
+        <item>Mahabubabad</item>
+        <item>Mahabubnagar</item>
+        <item>Mancherial</item>
+        <item>Medak</item>
+        <item>Medchal</item>
+        <item>Mulugu</item>
+        <item>Nagarkurnool</item>
+        <item>Nalgonda</item>
+        <item>Narayanpet</item>
+        <item>Nirmal</item>
+        <item>Nizamabad</item>
+        <item>Peddapalli</item>
+        <item>Rajanna Sircilla</item>
+        <item>Rangareddy</item>
+        <item>Sangareddy</item>
+        <item>Siddipet</item>
+        <item>Suryapet</item>
+        <item>Vikarabad</item>
+        <item>Wanaparthy</item>
+        <item>Warangal(Rural)</item>
+        <item>Warangal(Urban)</item>
+        <item>Yadadri Bhuvanagiri</item>
+        <item>Dhalai</item>
+        <item>Gomati</item>
+        <item>Khowai</item>
+        <item>North Tripura</item>
+        <item>Sepahijala</item>
+        <item>South Tripura</item>
+        <item>Unakoti</item>
+        <item>West Tripura</item>
+        <item>Agra</item>
+        <item>Aligarh</item>
+        <item>Ambedkar Nagar</item>
+        <item>Amethi</item>
+        <item>Amroha</item>
+        <item>Auraiya</item>
+        <item>Ayodhya</item>
+        <item>Azamgarh</item>
+        <item>Badaun</item>
+        <item>Baghpat</item>
+        <item>Bahraich</item>
+        <item>Balarampur</item>
+        <item>Ballia</item>
+        <item>Banda</item>
+        <item>Barabanki</item>
+        <item>Bareilly</item>
+        <item>Basti</item>
+        <item>Bhadohi</item>
+        <item>Bijnour</item>
+        <item>Bulandshahr</item>
+        <item>Chandauli</item>
+        <item>Chitrakoot</item>
+        <item>Deoria</item>
+        <item>Etah</item>
+        <item>Etawah</item>
+        <item>Farrukhabad</item>
+        <item>Fatehpur</item>
+        <item>Firozabad</item>
+        <item>Gautam Buddha Nagar</item>
+        <item>Ghaziabad</item>
+        <item>Ghazipur</item>
+        <item>Gonda</item>
+        <item>Gorakhpur</item>
+        <item>Hamirpur</item>
+        <item>Hapur</item>
+        <item>Hardoi</item>
+        <item>Hathras</item>
+        <item>Jalaun</item>
+        <item>Jaunpur</item>
+        <item>Jhansi</item>
+        <item>Kannauj</item>
+        <item>Kanpur Dehat</item>
+        <item>Kanpur Nagar</item>
+        <item>Kasganj</item>
+        <item>Kaushambi</item>
+        <item>Kushinagar</item>
+        <item>Lakhimpur Kheri</item>
+        <item>Lalitpur</item>
+        <item>Lucknow</item>
+        <item>Maharajganj</item>
+        <item>Mahoba</item>
+        <item>Mainpuri</item>
+        <item>Mathura</item>
+        <item>Mau</item>
+        <item>Meerut</item>
+        <item>Mirzapur</item>
+        <item>Moradabad</item>
+        <item>Muzaffarnagar</item>
+        <item>Pilibhit</item>
+        <item>Pratapgarh</item>
+        <item>Prayagraj</item>
+        <item>Raebareli</item>
+        <item>Rampur</item>
+        <item>Saharanpur</item>
+        <item>Sambhal</item>
+        <item>Sant Kabir Nagar</item>
+        <item>Shahjahanpur</item>
+        <item>Shamli</item>
+        <item>Shravasti</item>
+        <item>Siddharthnagar</item>
+        <item>Sitapur</item>
+        <item>Sonbhadra</item>
+        <item>Sultanpur</item>
+        <item>Unnao</item>
+        <item>Varanasi</item>
+        <item>Almora</item>
+        <item>Bageshwar</item>
+        <item>Chamoli</item>
+        <item>Champawat</item>
+        <item>Dehradun</item>
+        <item>Haridwar</item>
+        <item>Nainital</item>
+        <item>Pauri Garhwal</item>
+        <item>Pithoragarh</item>
+        <item>Rudraprayag</item>
+        <item>Tehri Garhwal</item>
+        <item>Udham Singh Nagar</item>
+        <item>Uttarkashi</item>
+        <item>Alipurduar District</item>
+        <item>Bankura</item>
+        <item>Basirhat HD (North 24 Parganas)</item>
+        <item>Birbhum</item>
+        <item>Bishnupur HD (Bankura)</item>
+        <item>Cooch Behar</item>
+        <item>COOCHBEHAR</item>
+        <item>Dakshin Dinajpur</item>
+        <item>Darjeeling</item>
+        <item>Diamond Harbor HD (S 24 Parganas)</item>
+        <item>East Bardhaman</item>
+        <item>Hoogly</item>
+        <item>Howrah</item>
+        <item>Jalpaiguri</item>
+        <item>Jhargram</item>
+        <item>Kalimpong</item>
+        <item>Kolkata</item>
+        <item>Malda</item>
+        <item>Murshidabad</item>
+        <item>Nadia</item>
+        <item>Nandigram HD (East Medinipore)</item>
+        <item>North 24 Parganas</item>
+        <item>Paschim Medinipore</item>
+        <item>Purba Medinipore</item>
+        <item>Purulia</item>
+        <item>Rampurhat HD (Birbhum)</item>
+        <item>South 24 Parganas</item>
+        <item>Uttar Dinajpur</item>
+        <item>West Bardhaman</item>
+        <item>Daman</item>
+        <item>Diu</item>
+        <item>Chamba</item>
+        <item>Kangra</item>
+        <item>Kinnaur</item>
+        <item>Mandi</item>
+        <item>Shimla</item>
+    </string-array>
+
+    <integer-array name="districtIds">
+        <item>0</item>
+        <item>392</item>
+        <item>3</item>
+        <item>1</item>
+        <item>2</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>5</item>
+        <item>4</item>
+        <item>7</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>8</item>
+        <item>15</item>
+        <item>16</item>
+        <item>6</item>
+        <item>22</item>
+        <item>20</item>
+        <item>25</item>
+        <item>23</item>
+        <item>42</item>
+        <item>17</item>
+        <item>24</item>
+        <item>27</item>
+        <item>21</item>
+        <item>33</item>
+        <item>29</item>
+        <item>40</item>
+        <item>31</item>
+        <item>18</item>
+        <item>32</item>
+        <item>36</item>
+        <item>19</item>
+        <item>39</item>
+        <item>35</item>
+        <item>37</item>
+        <item>30</item>
+        <item>26</item>
+        <item>34</item>
+        <item>41</item>
+        <item>28</item>
+        <item>38</item>
+        <item>46</item>
+        <item>47</item>
+        <item>765</item>
+        <item>57</item>
+        <item>66</item>
+        <item>766</item>
+        <item>58</item>
+        <item>48</item>
+        <item>62</item>
+        <item>59</item>
+        <item>43</item>
+        <item>67</item>
+        <item>60</item>
+        <item>53</item>
+        <item>68</item>
+        <item>764</item>
+        <item>54</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>69</item>
+        <item>61</item>
+        <item>63</item>
+        <item>767</item>
+        <item>55</item>
+        <item>56</item>
+        <item>52</item>
+        <item>44</item>
+        <item>64</item>
+        <item>768</item>
+        <item>45</item>
+        <item>65</item>
+        <item>769</item>
+        <item>74</item>
+        <item>78</item>
+        <item>77</item>
+        <item>83</item>
+        <item>98</item>
+        <item>82</item>
+        <item>99</item>
+        <item>100</item>
+        <item>94</item>
+        <item>105</item>
+        <item>79</item>
+        <item>104</item>
+        <item>107</item>
+        <item>91</item>
+        <item>80</item>
+        <item>75</item>
+        <item>101</item>
+        <item>76</item>
+        <item>84</item>
+        <item>70</item>
+        <item>95</item>
+        <item>85</item>
+        <item>86</item>
+        <item>90</item>
+        <item>92</item>
+        <item>97</item>
+        <item>73</item>
+        <item>81</item>
+        <item>71</item>
+        <item>96</item>
+        <item>102</item>
+        <item>93</item>
+        <item>87</item>
+        <item>88</item>
+        <item>103</item>
+        <item>72</item>
+        <item>89</item>
+        <item>106</item>
+        <item>108</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>116</item>
+        <item>117</item>
+        <item>118</item>
+        <item>119</item>
+        <item>120</item>
+        <item>136</item>
+        <item>121</item>
+        <item>122</item>
+        <item>123</item>
+        <item>135</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
+        <item>128</item>
+        <item>129</item>
+        <item>130</item>
+        <item>109</item>
+        <item>131</item>
+        <item>132</item>
+        <item>133</item>
+        <item>134</item>
+        <item>137</item>
+        <item>141</item>
+        <item>145</item>
+        <item>140</item>
+        <item>146</item>
+        <item>147</item>
+        <item>143</item>
+        <item>148</item>
+        <item>149</item>
+        <item>144</item>
+        <item>150</item>
+        <item>142</item>
+        <item>151</item>
+        <item>152</item>
+        <item>154</item>
+        <item>770</item>
+        <item>174</item>
+        <item>179</item>
+        <item>158</item>
+        <item>159</item>
+        <item>180</item>
+        <item>175</item>
+        <item>771</item>
+        <item>176</item>
+        <item>181</item>
+        <item>182</item>
+        <item>163</item>
+        <item>168</item>
+        <item>153</item>
+        <item>772</item>
+        <item>177</item>
+        <item>169</item>
+        <item>773</item>
+        <item>178</item>
+        <item>774</item>
+        <item>156</item>
+        <item>170</item>
+        <item>183</item>
+        <item>160</item>
+        <item>171</item>
+        <item>184</item>
+        <item>164</item>
+        <item>185</item>
+        <item>161</item>
+        <item>172</item>
+        <item>173</item>
+        <item>775</item>
+        <item>162</item>
+        <item>165</item>
+        <item>776</item>
+        <item>157</item>
+        <item>166</item>
+        <item>155</item>
+        <item>777</item>
+        <item>167</item>
+        <item>193</item>
+        <item>200</item>
+        <item>201</item>
+        <item>199</item>
+        <item>196</item>
+        <item>188</item>
+        <item>191</item>
+        <item>189</item>
+        <item>204</item>
+        <item>190</item>
+        <item>203</item>
+        <item>186</item>
+        <item>206</item>
+        <item>205</item>
+        <item>207</item>
+        <item>187</item>
+        <item>195</item>
+        <item>202</item>
+        <item>192</item>
+        <item>194</item>
+        <item>198</item>
+        <item>197</item>
+        <item>219</item>
+        <item>214</item>
+        <item>217</item>
+        <item>213</item>
+        <item>216</item>
+        <item>211</item>
+        <item>210</item>
+        <item>215</item>
+        <item>208</item>
+        <item>212</item>
+        <item>209</item>
+        <item>218</item>
+        <item>224</item>
+        <item>223</item>
+        <item>225</item>
+        <item>229</item>
+        <item>232</item>
+        <item>228</item>
+        <item>230</item>
+        <item>234</item>
+        <item>231</item>
+        <item>221</item>
+        <item>226</item>
+        <item>238</item>
+        <item>227</item>
+        <item>237</item>
+        <item>235</item>
+        <item>239</item>
+        <item>236</item>
+        <item>222</item>
+        <item>220</item>
+        <item>233</item>
+        <item>242</item>
+        <item>245</item>
+        <item>253</item>
+        <item>257</item>
+        <item>258</item>
+        <item>247</item>
+        <item>243</item>
+        <item>256</item>
+        <item>262</item>
+        <item>251</item>
+        <item>255</item>
+        <item>259</item>
+        <item>252</item>
+        <item>241</item>
+        <item>244</item>
+        <item>250</item>
+        <item>261</item>
+        <item>246</item>
+        <item>254</item>
+        <item>240</item>
+        <item>260</item>
+        <item>248</item>
+        <item>249</item>
+        <item>263</item>
+        <item>270</item>
+        <item>276</item>
+        <item>265</item>
+        <item>294</item>
+        <item>264</item>
+        <item>274</item>
+        <item>272</item>
+        <item>271</item>
+        <item>273</item>
+        <item>291</item>
+        <item>268</item>
+        <item>269</item>
+        <item>275</item>
+        <item>278</item>
+        <item>280</item>
+        <item>267</item>
+        <item>289</item>
+        <item>279</item>
+        <item>283</item>
+        <item>277</item>
+        <item>282</item>
+        <item>290</item>
+        <item>266</item>
+        <item>284</item>
+        <item>292</item>
+        <item>287</item>
+        <item>288</item>
+        <item>286</item>
+        <item>281</item>
+        <item>293</item>
+        <item>285</item>
+        <item>301</item>
+        <item>307</item>
+        <item>306</item>
+        <item>297</item>
+        <item>295</item>
+        <item>298</item>
+        <item>304</item>
+        <item>305</item>
+        <item>302</item>
+        <item>308</item>
+        <item>300</item>
+        <item>296</item>
+        <item>303</item>
+        <item>299</item>
+        <item>309</item>
+        <item>310</item>
+        <item>796</item>
+        <item>311</item>
+        <item>320</item>
+        <item>357</item>
+        <item>334</item>
+        <item>354</item>
+        <item>338</item>
+        <item>343</item>
+        <item>362</item>
+        <item>351</item>
+        <item>312</item>
+        <item>342</item>
+        <item>328</item>
+        <item>337</item>
+        <item>327</item>
+        <item>350</item>
+        <item>324</item>
+        <item>341</item>
+        <item>336</item>
+        <item>348</item>
+        <item>313</item>
+        <item>361</item>
+        <item>360</item>
+        <item>314</item>
+        <item>315</item>
+        <item>340</item>
+        <item>353</item>
+        <item>339</item>
+        <item>344</item>
+        <item>335</item>
+        <item>319</item>
+        <item>347</item>
+        <item>352</item>
+        <item>323</item>
+        <item>326</item>
+        <item>359</item>
+        <item>358</item>
+        <item>322</item>
+        <item>316</item>
+        <item>317</item>
+        <item>333</item>
+        <item>356</item>
+        <item>349</item>
+        <item>332</item>
+        <item>321</item>
+        <item>346</item>
+        <item>345</item>
+        <item>331</item>
+        <item>330</item>
+        <item>325</item>
+        <item>318</item>
+        <item>329</item>
+        <item>355</item>
+        <item>391</item>
+        <item>364</item>
+        <item>366</item>
+        <item>397</item>
+        <item>384</item>
+        <item>370</item>
+        <item>367</item>
+        <item>380</item>
+        <item>388</item>
+        <item>379</item>
+        <item>378</item>
+        <item>386</item>
+        <item>390</item>
+        <item>396</item>
+        <item>371</item>
+        <item>383</item>
+        <item>395</item>
+        <item>365</item>
+        <item>382</item>
+        <item>387</item>
+        <item>389</item>
+        <item>381</item>
+        <item>394</item>
+        <item>385</item>
+        <item>363</item>
+        <item>393</item>
+        <item>372</item>
+        <item>373</item>
+        <item>376</item>
+        <item>374</item>
+        <item>375</item>
+        <item>377</item>
+        <item>369</item>
+        <item>368</item>
+        <item>398</item>
+        <item>399</item>
+        <item>400</item>
+        <item>401</item>
+        <item>402</item>
+        <item>410</item>
+        <item>413</item>
+        <item>409</item>
+        <item>408</item>
+        <item>412</item>
+        <item>411</item>
+        <item>403</item>
+        <item>404</item>
+        <item>407</item>
+        <item>405</item>
+        <item>406</item>
+        <item>424</item>
+        <item>418</item>
+        <item>414</item>
+        <item>423</item>
+        <item>417</item>
+        <item>421</item>
+        <item>422</item>
+        <item>415</item>
+        <item>420</item>
+        <item>416</item>
+        <item>419</item>
+        <item>425</item>
+        <item>426</item>
+        <item>429</item>
+        <item>428</item>
+        <item>432</item>
+        <item>431</item>
+        <item>427</item>
+        <item>430</item>
+        <item>433</item>
+        <item>434</item>
+        <item>444</item>
+        <item>441</item>
+        <item>438</item>
+        <item>437</item>
+        <item>439</item>
+        <item>435</item>
+        <item>443</item>
+        <item>440</item>
+        <item>436</item>
+        <item>442</item>
+        <item>445</item>
+        <item>448</item>
+        <item>447</item>
+        <item>472</item>
+        <item>454</item>
+        <item>468</item>
+        <item>457</item>
+        <item>473</item>
+        <item>458</item>
+        <item>467</item>
+        <item>449</item>
+        <item>459</item>
+        <item>460</item>
+        <item>474</item>
+        <item>464</item>
+        <item>450</item>
+        <item>461</item>
+        <item>455</item>
+        <item>446</item>
+        <item>451</item>
+        <item>469</item>
+        <item>456</item>
+        <item>470</item>
+        <item>462</item>
+        <item>465</item>
+        <item>463</item>
+        <item>471</item>
+        <item>452</item>
+        <item>466</item>
+        <item>453</item>
+        <item>476</item>
+        <item>477</item>
+        <item>475</item>
+        <item>478</item>
+        <item>485</item>
+        <item>483</item>
+        <item>493</item>
+        <item>499</item>
+        <item>484</item>
+        <item>487</item>
+        <item>480</item>
+        <item>489</item>
+        <item>481</item>
+        <item>492</item>
+        <item>479</item>
+        <item>488</item>
+        <item>482</item>
+        <item>491</item>
+        <item>486</item>
+        <item>494</item>
+        <item>497</item>
+        <item>498</item>
+        <item>496</item>
+        <item>500</item>
+        <item>490</item>
+        <item>495</item>
+        <item>507</item>
+        <item>512</item>
+        <item>519</item>
+        <item>516</item>
+        <item>528</item>
+        <item>508</item>
+        <item>523</item>
+        <item>501</item>
+        <item>514</item>
+        <item>521</item>
+        <item>530</item>
+        <item>511</item>
+        <item>524</item>
+        <item>520</item>
+        <item>517</item>
+        <item>505</item>
+        <item>506</item>
+        <item>527</item>
+        <item>533</item>
+        <item>515</item>
+        <item>510</item>
+        <item>502</item>
+        <item>525</item>
+        <item>503</item>
+        <item>532</item>
+        <item>529</item>
+        <item>522</item>
+        <item>518</item>
+        <item>534</item>
+        <item>513</item>
+        <item>531</item>
+        <item>509</item>
+        <item>526</item>
+        <item>504</item>
+        <item>535</item>
+        <item>537</item>
+        <item>538</item>
+        <item>536</item>
+        <item>779</item>
+        <item>555</item>
+        <item>578</item>
+        <item>565</item>
+        <item>571</item>
+        <item>778</item>
+        <item>539</item>
+        <item>547</item>
+        <item>566</item>
+        <item>556</item>
+        <item>563</item>
+        <item>552</item>
+        <item>557</item>
+        <item>544</item>
+        <item>559</item>
+        <item>780</item>
+        <item>562</item>
+        <item>540</item>
+        <item>576</item>
+        <item>558</item>
+        <item>577</item>
+        <item>564</item>
+        <item>573</item>
+        <item>570</item>
+        <item>575</item>
+        <item>546</item>
+        <item>567</item>
+        <item>781</item>
+        <item>545</item>
+        <item>561</item>
+        <item>580</item>
+        <item>551</item>
+        <item>541</item>
+        <item>569</item>
+        <item>554</item>
+        <item>560</item>
+        <item>548</item>
+        <item>550</item>
+        <item>568</item>
+        <item>572</item>
+        <item>553</item>
+        <item>574</item>
+        <item>543</item>
+        <item>542</item>
+        <item>549</item>
+        <item>582</item>
+        <item>583</item>
+        <item>581</item>
+        <item>584</item>
+        <item>585</item>
+        <item>586</item>
+        <item>587</item>
+        <item>588</item>
+        <item>589</item>
+        <item>590</item>
+        <item>591</item>
+        <item>592</item>
+        <item>593</item>
+        <item>594</item>
+        <item>595</item>
+        <item>596</item>
+        <item>612</item>
+        <item>597</item>
+        <item>598</item>
+        <item>613</item>
+        <item>599</item>
+        <item>600</item>
+        <item>601</item>
+        <item>602</item>
+        <item>603</item>
+        <item>604</item>
+        <item>605</item>
+        <item>606</item>
+        <item>607</item>
+        <item>608</item>
+        <item>609</item>
+        <item>610</item>
+        <item>611</item>
+        <item>614</item>
+        <item>615</item>
+        <item>616</item>
+        <item>617</item>
+        <item>618</item>
+        <item>619</item>
+        <item>620</item>
+        <item>621</item>
+        <item>622</item>
+        <item>623</item>
+        <item>625</item>
+        <item>626</item>
+        <item>627</item>
+        <item>628</item>
+        <item>646</item>
+        <item>629</item>
+        <item>630</item>
+        <item>631</item>
+        <item>632</item>
+        <item>633</item>
+        <item>634</item>
+        <item>635</item>
+        <item>636</item>
+        <item>637</item>
+        <item>638</item>
+        <item>687</item>
+        <item>639</item>
+        <item>640</item>
+        <item>641</item>
+        <item>642</item>
+        <item>643</item>
+        <item>644</item>
+        <item>645</item>
+        <item>647</item>
+        <item>648</item>
+        <item>649</item>
+        <item>650</item>
+        <item>651</item>
+        <item>652</item>
+        <item>653</item>
+        <item>654</item>
+        <item>655</item>
+        <item>656</item>
+        <item>657</item>
+        <item>658</item>
+        <item>659</item>
+        <item>660</item>
+        <item>661</item>
+        <item>662</item>
+        <item>663</item>
+        <item>664</item>
+        <item>665</item>
+        <item>666</item>
+        <item>667</item>
+        <item>668</item>
+        <item>669</item>
+        <item>670</item>
+        <item>671</item>
+        <item>672</item>
+        <item>673</item>
+        <item>674</item>
+        <item>675</item>
+        <item>676</item>
+        <item>677</item>
+        <item>678</item>
+        <item>679</item>
+        <item>680</item>
+        <item>682</item>
+        <item>624</item>
+        <item>681</item>
+        <item>683</item>
+        <item>684</item>
+        <item>685</item>
+        <item>686</item>
+        <item>688</item>
+        <item>689</item>
+        <item>690</item>
+        <item>691</item>
+        <item>692</item>
+        <item>693</item>
+        <item>694</item>
+        <item>695</item>
+        <item>696</item>
+        <item>704</item>
+        <item>707</item>
+        <item>699</item>
+        <item>708</item>
+        <item>697</item>
+        <item>702</item>
+        <item>709</item>
+        <item>698</item>
+        <item>706</item>
+        <item>700</item>
+        <item>701</item>
+        <item>705</item>
+        <item>703</item>
+        <item>710</item>
+        <item>711</item>
+        <item>712</item>
+        <item>713</item>
+        <item>714</item>
+        <item>715</item>
+        <item>783</item>
+        <item>716</item>
+        <item>717</item>
+        <item>718</item>
+        <item>719</item>
+        <item>720</item>
+        <item>721</item>
+        <item>722</item>
+        <item>723</item>
+        <item>724</item>
+        <item>725</item>
+        <item>726</item>
+        <item>727</item>
+        <item>728</item>
+        <item>729</item>
+        <item>730</item>
+        <item>731</item>
+        <item>732</item>
+        <item>733</item>
+        <item>734</item>
+        <item>735</item>
+        <item>736</item>
+        <item>737</item>
+        <item>138</item>
+        <item>139</item>
+        <item>791</item>
+        <item>795</item>
+        <item>792</item>
+        <item>793</item>
+        <item>794</item>
+    </integer-array>
 </resources>
