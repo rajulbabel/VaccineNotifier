@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void refreshAlertDetails() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Alerts", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
         if (sharedPreferences.getAll().size() == 0) {
             return;
         }
@@ -50,50 +50,50 @@ public class MainActivity extends AppCompatActivity {
         String feeType = sharedPreferences.getString(VaccineConstraints.feeType.name(), "");
         String dose = sharedPreferences.getString(VaccineConstraints.dose.name(), "");
 
-        final String newLine = "\n";
+        final String newLine = getString(R.string.newLine);
         TextView textView = findViewById(R.id.alertDetails);
-        textView.setText("age: " + age + newLine +
-                "vaccine: " + vaccine + newLine +
-                "feeType: " + feeType + newLine +
-                "dose: " + dose + newLine);
+        textView.setText("age: " + age + newLine + "vaccine: " + vaccine + newLine + "feeType: " + feeType + newLine + "dose: " + dose + newLine);
+        populateSharedPrefDataToUi(age, vaccine, feeType, dose);
+    }
 
-        if (age == 18) {
+    private void populateSharedPrefDataToUi(int age, String vaccine, String feeType, String dose) {
+        if (age == getResources().getInteger(R.integer.age18)) {
             checkRadioBox(R.id.age18);
-        } else if (age == 45) {
+        } else if (age == getResources().getInteger(R.integer.age45)) {
             checkRadioBox(R.id.age45);
         }
 
-        if (dose.equals("does1")) {
+        if (dose.equals(getString(R.string.dose1))) {
             checkRadioBox(R.id.dose1);
-        } else if (dose.equals("dose2")) {
+        } else if (dose.equals(getString(R.string.dose2))) {
             checkRadioBox(R.id.dose2);
         }
 
-        List<String> vaccineList = Arrays.asList(vaccine.split(","));
+        List<String> vaccineList = Arrays.asList(vaccine.split(getString(R.string.comma)));
         List<Integer> checkBoxList = new ArrayList<>();
-        if (vaccineList.contains("covishield")) {
-            checkBoxList.add(R.id.covishield);
+        if (vaccineList.contains(getString(R.string.COVISHIELD))) {
+            checkBoxList.add(R.id.COVISHIELD);
         }
-        if (vaccineList.contains("covaxin")) {
-            checkBoxList.add(R.id.covaxin);
+        if (vaccineList.contains(getString(R.string.COVAXIN))) {
+            checkBoxList.add(R.id.COVAXIN);
         }
-        if (vaccineList.contains("sputnik")) {
-            checkBoxList.add(R.id.sputnik);
+        if (vaccineList.contains(getString(R.string.SPUTNIK))) {
+            checkBoxList.add(R.id.SPUTNIK);
         }
         if (vaccineList.size() == 0) {
-            checkBoxList = Arrays.asList(R.id.covishield, R.id.covaxin, R.id.sputnik);
+            checkBoxList = Arrays.asList(R.id.COVISHIELD, R.id.COVAXIN, R.id.SPUTNIK);
         }
 
-        List<String> feeTypeList = Arrays.asList(feeType.split(","));
-        if (feeTypeList.contains("free")) {
-            checkBoxList.add(R.id.free);
+        List<String> feeTypeList = Arrays.asList(feeType.split(getString(R.string.comma)));
+        if (feeTypeList.contains(getString(R.string.feeTypeFree))) {
+            checkBoxList.add(R.id.feeTypeFree);
         }
-        if (feeTypeList.contains("paid")) {
-            checkBoxList.add(R.id.paid);
+        if (feeTypeList.contains(getString(R.string.feeTypePaid))) {
+            checkBoxList.add(R.id.feeTypePaid);
         }
         if (feeTypeList.size() == 0) {
-            checkBoxList.add(R.id.free);
-            checkBoxList.add(R.id.paid);
+            checkBoxList.add(R.id.feeTypeFree);
+            checkBoxList.add(R.id.feeTypePaid);
         }
         checkCheckBox(checkBoxList);
     }
@@ -112,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void createAlert(View view) {
         String age = getRadioBoxValueFromGroup(R.id.age);
-        String vaccine = getCheckBoxValues(Arrays.asList(R.id.covishield, R.id.covaxin, R.id.sputnik));
-        String feeType = getCheckBoxValues(Arrays.asList(R.id.free, R.id.paid));
+        String vaccine = getCheckBoxValues(Arrays.asList(R.id.COVISHIELD, R.id.COVAXIN, R.id.SPUTNIK));
+        String feeType = getCheckBoxValues(Arrays.asList(R.id.feeTypeFree, R.id.feeTypePaid));
         String dose = getRadioBoxValueFromGroup(R.id.dose);
 
-        SharedPreferences sharedpreferences = getSharedPreferences("Alerts", Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putInt(VaccineConstraints.age.name(), Integer.parseInt(age));
         editor.putString(VaccineConstraints.vaccine.name(), vaccine);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(VaccineConstraints.dose.name(), dose);
         editor.apply();
 
-        Toast.makeText(MainActivity.this, "Alert created", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, getString(R.string.alertCreated), Toast.LENGTH_SHORT).show();
         refreshAlertDetails();
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 checkBoxValues.add(checkBox.getText().toString());
             }
         }
-        return String.join(",", checkBoxValues);
+        return String.join(getString(R.string.comma), checkBoxValues);
     }
 
     private String getRadioBoxValueFromGroup(Integer radioBoxGroupId) {

@@ -4,11 +4,9 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class AvailableCenter {
     private String name;
     private String pincode;
@@ -16,7 +14,6 @@ public class AvailableCenter {
 
     @Getter
     @Setter
-    @ToString
     public static class AvailableSession {
         private String vaccine;
         private Integer availableCapacity;

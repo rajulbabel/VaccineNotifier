@@ -17,7 +17,7 @@ public class SlotResponseHelper {
         }
         List<AvailableCenter> availableCenters = new ArrayList<>();
         for (GetSlotsResponse.Center center : slotsResponse.getCenters()) {
-            if (feeTypeList != null && !feeTypeList.contains(center.getFeeType().toLowerCase())) {
+            if (feeTypeList != null && !feeTypeList.contains(center.getFeeType())) {
                 continue;
             }
             List<AvailableCenter.AvailableSession> availableSessions = new ArrayList<>();
@@ -52,6 +52,6 @@ public class SlotResponseHelper {
         if (!vaccine.equals("")) {
             vaccineList = Arrays.asList(vaccine.split(","));
         }
-        return vaccineList == null || vaccineList.contains(session.getVaccine().toLowerCase());
+        return vaccineList == null || vaccineList.contains(session.getVaccine().toUpperCase());
     }
 }

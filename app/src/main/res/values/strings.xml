@@ -1,18 +1,27 @@
 <resources>
     <string name="app_name">Vaccine Notifier</string>
-    <string name="age18">18</string>
-    <string name="age45">45</string>
-    <string name="covishield">covishield</string>
-    <string name="covaxin">covaxin</string>
-    <string name="sputnik">sputnik</string>
-    <string name="freeType">free</string>
-    <string name="paidType">paid</string>
-    <string name="dose1">dose1</string>
-    <string name="dose2">dose2</string>
-    <string name="age">age</string>
-    <string name="vaccine">vaccine</string>
-    <string name="type">type</string>
-    <string name="dose">dose</string>
-    <string name="create_alert">Create Alert</string>
+
+    <integer name="age18">18</integer>
+    <integer name="age45">45</integer>
+    <string name="COVISHIELD">COVISHIELD</string>
+    <string name="COVAXIN">COVAXIN</string>
+    <string name="SPUTNIK">SPUTNIK</string>
+    <string name="feeTypeFree">Free</string>
+    <string name="feeTypePaid">Paid</string>
+    <string name="dose1">Dose1</string>
+    <string name="dose2">Dose2</string>
+
+    <string name="alertsSharedPreferencesName">Alerts</string>
+    <string name="availableCentersJson">availableCentersJson</string>
+
+    <string name="coWinBaseUrl">https://cdn-api.co-vin.in</string>
+    <string name="coWinDateFormat">dd-MM-yyyy</string>
+    <string name="httpAgent">http.agent</string>
+    <string name="createAlert">Create Alert</string>
     <string name="alertDetails">No alerts set</string>
+    <string name="alertCreated">Alert Created</string>
+    <string name="centerNameDisplay">Center Name: </string>
+    <string name="centerPincodeDisplay">Center Pincode: </string>
+    <string name="comma">,</string>
+    <string name="newLine">\n</string>
 </resources>

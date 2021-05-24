@@ -36,8 +36,8 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
     public void onCreate() {
         super.onCreate();
 
-        String CHANNEL_ID = "vaccine_notifier";
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Vaccine notifier", NotificationManager.IMPORTANCE_NONE);
+        String CHANNEL_ID = "vaccine_notifier_background";
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "vaccine_notifier_background", NotificationManager.IMPORTANCE_NONE);
         ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).createNotificationChannel(channel);
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID).build();
         startForeground(1, notification);
@@ -45,14 +45,14 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask();
+        CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask(getResources());
         coWinAsyncTask.doTask(this);
         Log.i("onHandleIntent", "Service is running");
     }
 
     @Override
     public void onTaskSuccess(GetSlotsResponse result) {
-        SharedPreferences sharedPreferences = getSharedPreferences("Alerts", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
         if (sharedPreferences.getAll().size() == 0) {
             return;
         }

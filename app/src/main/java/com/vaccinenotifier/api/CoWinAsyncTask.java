@@ -1,8 +1,10 @@
 package com.vaccinenotifier.api;
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.vaccinenotifier.R;
 import com.vaccinenotifier.bean.GetSlotsResponse;
 
 import java.io.IOException;
@@ -13,7 +15,12 @@ import retrofit2.Response;
 
 public class CoWinAsyncTask extends AsyncTask<Void, Void, Object> {
 
+    private final Resources resources;
     private ResultListener listener;
+
+    public CoWinAsyncTask(Resources resources) {
+        this.resources = resources;
+    }
 
     public void doTask(ResultListener listener) {
         this.listener = listener;
@@ -23,11 +30,11 @@ public class CoWinAsyncTask extends AsyncTask<Void, Void, Object> {
     @Override
     protected Object doInBackground(Void... voids) {
         GetSlotsResponse slotResponse = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(resources.getString(R.string.coWinDateFormat));
         String todayDate = simpleDateFormat.format(new Date(System.currentTimeMillis()));
         try {
-            Response<GetSlotsResponse> getSlotsResponse = RetrofitClientInstance.getRetrofitInstance()
-                    .create(CoWin.class).getSlots("392", todayDate, System.getProperty("http.agent"))
+            Response<GetSlotsResponse> getSlotsResponse = RetrofitClientInstance.getRetrofitInstance(resources.getString(R.string.coWinBaseUrl))
+                    .create(CoWin.class).getSlots("392", todayDate, System.getProperty(resources.getString(R.string.httpAgent)))
                     .execute();
             int responseCode = getSlotsResponse.code();
             if (responseCode == 200) {

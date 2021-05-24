@@ -28,12 +28,12 @@ public class CentersActivity extends AppCompatActivity {
         List<AvailableCenter> availableCenterList = new ArrayList<>();
         Gson gson = new Gson();
         JsonParser parser = new JsonParser();
-        JsonArray jsonArray = parser.parse(getIntent().getExtras().get("availableCentersJson").toString()).getAsJsonArray();
+        JsonArray jsonArray = parser.parse(getIntent().getExtras().get(getString(R.string.availableCentersJson)).toString()).getAsJsonArray();
         for (JsonElement jsonElement : jsonArray) {
             availableCenterList.add(gson.fromJson(jsonElement, AvailableCenter.class));
         }
 
-        CentersAdapter centersAdapter = new CentersAdapter();
+        CentersAdapter centersAdapter = new CentersAdapter(getResources());
         centersAdapter.setAvailableCenters(availableCenterList);
         recyclerView.setAdapter(centersAdapter);
     }

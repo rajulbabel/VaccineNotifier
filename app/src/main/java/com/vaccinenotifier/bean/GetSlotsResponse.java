@@ -53,6 +53,5 @@ public class GetSlotsResponse {
         private Integer availableCapacityDose1;
         @SerializedName("available_capacity_dose2")
         private Integer availableCapacityDose2;
-
     }
 }
