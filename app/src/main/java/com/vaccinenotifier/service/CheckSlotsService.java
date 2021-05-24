@@ -82,7 +82,7 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, getResources().getInteger(R.integer.notifyId), centersIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         String channelId = getString(R.string.notifyChannelId);
-        NotificationChannel channel = new NotificationChannel(channelId, getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
+        NotificationChannel channel = new NotificationChannel(channelId, getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
         ((NotificationManager) getSystemService(NOTIFICATION_SERVICE)).createNotificationChannel(channel);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, channelId)
