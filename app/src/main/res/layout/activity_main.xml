@@ -9,7 +9,7 @@
     android:paddingEnd="1dp"
     tools:context=".MainActivity">
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/districtNames"
         android:layout_width="322dp"
         android:layout_height="54dp"
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/SPUTNIK"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/age" />
