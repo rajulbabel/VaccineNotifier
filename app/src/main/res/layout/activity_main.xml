@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="12dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="12dp"
+    tools:context=".MainActivity">
+
+    <RadioGroup
+        android:id="@+id/age"
+        android:layout_width="160dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="36dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/age18"
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:checked="true"
+            android:text="@string/age18" />
+
+        <RadioButton
+            android:id="@+id/age45"
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:text="@string/age45" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/sputnik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/sputnik"
+        app:layout_constraintStart_toEndOf="@+id/covaxin"
+        app:layout_constraintTop_toBottomOf="@+id/age" />
+
+    <CheckBox
+        android:id="@+id/covaxin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:checked="false"
+        android:text="@string/covaxin"
+        app:layout_constraintStart_toEndOf="@+id/covishield"
+        app:layout_constraintTop_toBottomOf="@+id/age" />
+
+    <CheckBox
+        android:id="@+id/covishield"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/covishield"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/age" />
+
+    <CheckBox
+        android:id="@+id/free"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text="@string/freeType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/covaxin" />
+
+    <CheckBox
+        android:id="@+id/paid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:text="@string/paidType"
+        app:layout_constraintStart_toEndOf="@+id/free"
+        app:layout_constraintTop_toBottomOf="@+id/covaxin" />
+
+    <RadioGroup
+        android:id="@+id/dose"
+        android:layout_width="180dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/free">
+
+        <RadioButton
+            android:id="@+id/dose1"
+            android:layout_width="90dp"
+            android:layout_height="34dp"
+            android:checked="true"
+            android:text="@string/dose1" />
+
+        <RadioButton
+            android:id="@+id/dose2"
+            android:layout_width="90dp"
+            android:layout_height="34dp"
+            android:layout_weight="1"
+            android:text="@string/dose2" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/create_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="24dp"
+        android:onClick="createAlert"
+        android:text="@string/create_alert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dose" />
+
+    <TextView
+        android:id="@+id/alertDetails"
+        android:layout_width="301dp"
+        android:layout_height="176dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/alertDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_alert" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
