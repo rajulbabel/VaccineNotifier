@@ -6,9 +6,20 @@
     android:layout_height="match_parent"
     android:paddingStart="12dp"
     android:paddingLeft="12dp"
-    android:paddingRight="12dp"
     android:paddingTop="12dp"
+    android:paddingRight="12dp"
     tools:context=".MainActivity">
+
+    <Spinner
+        android:id="@+id/districtNames"
+        android:layout_width="322dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="28dp"
+        android:entries="@array/districtNames"
+        android:spinnerMode="dropdown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:id="@+id/age"
@@ -35,13 +46,13 @@
     </RadioGroup>
 
     <CheckBox
-        android:id="@+id/SPUTNIK"
+        android:id="@+id/COVISHIELD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="22dp"
         android:layout_marginTop="28dp"
-        android:text="@string/SPUTNIK"
-        app:layout_constraintStart_toEndOf="@+id/COVAXIN"
+        android:text="@string/COVISHIELD"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/age" />
 
     <CheckBox
@@ -56,13 +67,13 @@
         app:layout_constraintTop_toBottomOf="@+id/age" />
 
     <CheckBox
-        android:id="@+id/COVISHIELD"
+        android:id="@+id/SPUTNIK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
-        android:text="@string/COVISHIELD"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/SPUTNIK"
+        app:layout_constraintStart_toEndOf="@+id/COVAXIN"
         app:layout_constraintTop_toBottomOf="@+id/age" />
 
     <CheckBox
@@ -113,14 +124,25 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/create_alert"
+        android:id="@+id/createAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="28dp"
         android:onClick="createAlert"
         android:text="@string/createAlert"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dose" />
+
+    <Button
+        android:id="@+id/removeAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:onClick="removeAlert"
+        android:text="Remove Alert"
+        app:layout_constraintStart_toEndOf="@+id/createAlert"
         app:layout_constraintTop_toBottomOf="@+id/dose" />
 
     <TextView
@@ -131,17 +153,6 @@
         android:layout_marginTop="40dp"
         android:text="@string/alertDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_alert" />
-
-    <Spinner
-        android:id="@+id/districtNames"
-        android:layout_width="322dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="28dp"
-        android:entries="@array/districtNames"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/createAlert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

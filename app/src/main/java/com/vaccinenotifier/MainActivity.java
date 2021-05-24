@@ -127,19 +127,24 @@ public class MainActivity extends AppCompatActivity {
                 .feeType(getCheckBoxValues(Arrays.asList(R.id.feeTypeFree, R.id.feeTypePaid)))
                 .dose(getRadioBoxValueFromGroup(R.id.dose)).build();
 
-        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(SlotConstraints.Fields.districtName, slotConstraints.getDistrictName());
-        editor.putInt(SlotConstraints.Fields.districtId, slotConstraints.getDistrictId());
-        editor.putInt(SlotConstraints.Fields.districtSpinnerPosition, slotConstraints.getDistrictSpinnerPosition());
-        editor.putInt(SlotConstraints.Fields.age, slotConstraints.getAge());
-        editor.putString(SlotConstraints.Fields.vaccine, slotConstraints.getVaccine());
-        editor.putString(SlotConstraints.Fields.feeType, slotConstraints.getFeeType());
-        editor.putString(SlotConstraints.Fields.dose, slotConstraints.getDose());
-        editor.apply();
+        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
+                .putString(SlotConstraints.Fields.districtName, slotConstraints.getDistrictName())
+                .putInt(SlotConstraints.Fields.districtId, slotConstraints.getDistrictId())
+                .putInt(SlotConstraints.Fields.districtSpinnerPosition, slotConstraints.getDistrictSpinnerPosition())
+                .putInt(SlotConstraints.Fields.age, slotConstraints.getAge())
+                .putString(SlotConstraints.Fields.vaccine, slotConstraints.getVaccine())
+                .putString(SlotConstraints.Fields.feeType, slotConstraints.getFeeType())
+                .putString(SlotConstraints.Fields.dose, slotConstraints.getDose())
+                .apply();
 
         Toast.makeText(MainActivity.this, getString(R.string.alertCreated), Toast.LENGTH_SHORT).show();
         refreshAlertDetails();
+    }
+
+    public void removeAlert(View view) {
+        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit().clear().apply();
+        TextView textView = findViewById(R.id.alertDetails);
+        textView.setText(getString(R.string.alertDetails));
     }
 
     private String getCheckBoxValues(List<Integer> checkBoxIds) {

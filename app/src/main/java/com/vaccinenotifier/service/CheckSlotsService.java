@@ -45,6 +45,9 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         slotConstraints = getSlotConstraints();
+        if (slotConstraints == null) {
+            return;
+        }
         CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask(getResources());
         coWinAsyncTask.doTask(this, slotConstraints.getDistrictId());
         Log.i("onHandleIntent", "Service is running");
