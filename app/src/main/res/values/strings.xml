@@ -46,7 +46,6 @@
 
     <string-array name="districtNames">
         <item>Select District</item>
-        <item>Thane</item>
         <item>Adilabad</item>
         <item>Agar</item>
         <item>Agatti Island</item>
@@ -732,6 +731,7 @@
         <item>Tehri Garhwal</item>
         <item>Tengnoupal</item>
         <item>Tenkasi</item>
+        <item>Thane</item>
         <item>Thanjavur</item>
         <item>Theni</item>
         <item>Thiruvananthapuram</item>
@@ -805,13 +805,12 @@
         <item>Yamunanagar</item>
         <item>Yanam</item>
         <item>Yavatmal</item>
-        <item>YSR DistrictKadapa (Cuddapah)</item>
+        <item>YSR District, Kadapa (Cuddapah)</item>
         <item>Zunheboto</item>
     </string-array>
 
     <integer-array name="districtIds">
         <item>0</item>
-        <item>392</item>
         <item>582</item>
         <item>320</item>
         <item>796</item>
@@ -1497,6 +1496,7 @@
         <item>701</item>
         <item>407</item>
         <item>551</item>
+        <item>392</item>
         <item>541</item>
         <item>569</item>
         <item>296</item>

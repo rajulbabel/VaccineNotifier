@@ -126,25 +126,25 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/createAlert"
+        android:id="@+id/removeAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:onClick="createAlert"
-        android:text="@string/createAlert"
+        android:onClick="removeAlert"
+        android:text="@string/removeAlert"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dose" />
 
     <Button
-        android:id="@+id/removeAlert"
+        android:id="@+id/createAlert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:onClick="removeAlert"
-        android:text="@string/removeAlert"
+        android:onClick="createAlert"
+        android:text="@string/createAlert"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/createAlert"
+        app:layout_constraintStart_toEndOf="@+id/removeAlert"
         app:layout_constraintTop_toBottomOf="@+id/dose" />
 
     <TextView
