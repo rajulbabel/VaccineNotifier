@@ -1,5 +1,8 @@
 package com.vaccinenotifier.helper;
 
+import android.content.res.Resources;
+
+import com.vaccinenotifier.R;
 import com.vaccinenotifier.bean.AvailableCenter;
 import com.vaccinenotifier.bean.GetSlotsResponse;
 
@@ -9,7 +12,7 @@ import java.util.List;
 
 public class SlotResponseHelper {
 
-    public static List<AvailableCenter> filter(GetSlotsResponse slotsResponse, int ageLimit, String vaccine, String feeType, String dose) {
+    public static List<AvailableCenter> filter(GetSlotsResponse slotsResponse, int ageLimit, String vaccine, String feeType, String dose, Resources resources) {
 
         List<String> feeTypeList = null;
         if (!feeType.equals("")) {
@@ -22,10 +25,10 @@ public class SlotResponseHelper {
             }
             List<AvailableCenter.AvailableSession> availableSessions = new ArrayList<>();
             for (GetSlotsResponse.Session session : center.getSessions()) {
-                if (constraintChecks(session, ageLimit, vaccine)) {
+                if (constraintChecks(session, ageLimit, vaccine, dose, resources)) {
                     AvailableCenter.AvailableSession availableSession = new AvailableCenter.AvailableSession();
                     availableSession.setVaccine(session.getVaccine());
-                    availableSession.setAvailableCapacity(session.getAvailableCapacity());
+                    availableSession.setAvailableCapacity(getAvailableCapacity(dose, session, resources));
                     availableSession.setDate(session.getDate());
                     availableSessions.add(availableSession);
                 }
@@ -41,11 +44,20 @@ public class SlotResponseHelper {
         return availableCenters;
     }
 
-    private static boolean constraintChecks(GetSlotsResponse.Session session, int ageLimit, String vaccine) {
+    private static int getAvailableCapacity(String dose, GetSlotsResponse.Session session, Resources resources) {
+        if (dose.equals(resources.getString(R.string.dose1))) {
+            return session.getAvailableCapacityDose1();
+        } else if (dose.equals(resources.getString(R.string.dose2))) {
+            return session.getAvailableCapacityDose2();
+        }
+        return session.getAvailableCapacity();
+    }
+
+    private static boolean constraintChecks(GetSlotsResponse.Session session, int ageLimit, String vaccine, String dose, Resources resources) {
         if (session.getMinAgeLimit() != ageLimit) {
             return false;
         }
-        if (session.getAvailableCapacity() <= 0) {
+        if (getAvailableCapacity(dose, session, resources) <= 0) {
             return false;
         }
         List<String> vaccineList = null;

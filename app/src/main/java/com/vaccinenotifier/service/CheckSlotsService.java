@@ -63,7 +63,7 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
 
     @Override
     public void onTaskSuccess(GetSlotsResponse result) {
-        List<AvailableCenter> availableCenters = SlotResponseHelper.filter(result, slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose());
+        List<AvailableCenter> availableCenters = SlotResponseHelper.filter(result, slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose(), getResources());
         if (availableCenters.size() == 0) {
             Log.i("onTaskSuccess", getString(R.string.noCentersAvailable));
             return;
@@ -72,7 +72,7 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
 
         StringBuilder notificationText = new StringBuilder();
         for (AvailableCenter availableCenter : availableCenters) {
-            notificationText.append(availableCenter.getName()).append(" @ ").append(availableCenter.getAvailableSessions().get(0).getDate()).append("\n");
+            notificationText.append(availableCenter.getName()).append(" @ ").append(availableCenter.getAvailableSessions().get(0).getDate()).append(getResources().getString(R.string.newLine));
         }
 
         Intent centersIntent = new Intent(this, CentersActivity.class);
