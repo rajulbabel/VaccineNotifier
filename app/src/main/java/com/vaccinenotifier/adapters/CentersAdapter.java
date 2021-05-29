@@ -65,8 +65,8 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.CentersV
         }
 
         public void bind(AvailableCenter availableCenter) {
-            centerName.setText(resources.getString(R.string.centerNameDisplay) + availableCenter.getName());
-            centerPincode.setText(resources.getString(R.string.centerPincodeDisplay) + availableCenter.getPincode());
+            centerName.setText(resources.getString(R.string.centerNameDisplay, availableCenter.getName()));
+            centerPincode.setText(resources.getString(R.string.centerPincodeDisplay, availableCenter.getPincode()));
             StringBuilder sessionData = new StringBuilder();
             for (AvailableCenter.AvailableSession session : availableCenter.getAvailableSessions()) {
                 sessionData.append(session.getDate())
@@ -80,8 +80,8 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.CentersV
         }
 
         public void displayAllSlotsBind(AvailableCenter availableCenter) {
-            centerName.setText(resources.getString(R.string.centerNameDisplay) + availableCenter.getName());
-            centerPincode.setText(resources.getString(R.string.centerPincodeDisplay) + availableCenter.getPincode());
+            centerName.setText(resources.getString(R.string.centerNameDisplay, availableCenter.getName()));
+            centerPincode.setText(resources.getString(R.string.centerPincodeDisplay, availableCenter.getPincode()));
             StringBuilder sessionData = new StringBuilder();
             for (AvailableCenter.AvailableSession session : availableCenter.getAvailableSessions()) {
                 sessionData.append(resources.getString(R.string.smallTab)).append(session.getDate()).append(":")

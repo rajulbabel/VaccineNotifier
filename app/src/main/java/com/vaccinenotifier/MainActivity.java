@@ -7,17 +7,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
+import com.google.gson.Gson;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+import com.vaccinenotifier.api.CoWinAsyncTask;
+import com.vaccinenotifier.bean.AvailableCenter;
+import com.vaccinenotifier.bean.GetSlotsResponse;
 import com.vaccinenotifier.bean.SlotConstraints;
+import com.vaccinenotifier.helper.SlotResponseHelper;
 import com.vaccinenotifier.service.BroadcastReceiverImpl;
 
 import java.util.ArrayList;
@@ -30,6 +41,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SearchableSpinner searchableSpinner = findViewById(R.id.districtNames);
+        searchableSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    return;
+                }
+                getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
+                        .putString(SlotConstraints.Fields.districtName, searchableSpinner.getSelectedItem().toString())
+                        .putInt(SlotConstraints.Fields.districtId, getResources().getIntArray(R.array.districtIds)[position])
+                        .putInt(SlotConstraints.Fields.districtSpinnerPosition, position)
+                        .apply();
+                refreshAlertDetails();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         refreshAlertDetails();
         scheduleAlarm();
     }
@@ -48,19 +79,24 @@ public class MainActivity extends AppCompatActivity {
         }
         SlotConstraints slotConstraints = SlotConstraints.buildBySharedPref(sharedPreferences, getResources());
 
-        final String newLine = getString(R.string.newLine);
         TextView textView = findViewById(R.id.alertDetails);
-        textView.setText("District Name: " + slotConstraints.getDistrictName() + newLine + "Age: " + slotConstraints.getAge() + newLine + "Vaccine: " + slotConstraints.getVaccine() + newLine + "Fee Type: " + slotConstraints.getFeeType() + newLine + "Dose: " + slotConstraints.getDose() + newLine);
-        populateSharedPrefDataToUi(slotConstraints.getDistrictSpinnerPosition(), slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose());
+        String notificationStatus = slotConstraints.isEnabled() ? getString(R.string.notificationOn) : getString(R.string.notificationOff);
+        textView.setText(getString(R.string.alertConfigDisplayString, notificationStatus) + getString(R.string.alertsDescription, slotConstraints.getDistrictName(), slotConstraints.getAge(), slotConstraints.getVaccine(), slotConstraints.getFeeType(), slotConstraints.getDose()));
+        populateSharedPrefDataToUi(slotConstraints);
     }
 
-    private void populateSharedPrefDataToUi(Integer districtSpinnerPosition, int age, String vaccine, String feeType, String dose) {
+    private void populateSharedPrefDataToUi(SlotConstraints slotConstraints) {
+        Integer districtSpinnerPosition = slotConstraints.getDistrictSpinnerPosition();
+        String age = slotConstraints.getAge();
+        String vaccine = slotConstraints.getVaccine();
+        String feeType = slotConstraints.getFeeType();
+        String dose = slotConstraints.getDose();
         Spinner spinner = findViewById(R.id.districtNames);
         spinner.setSelection(districtSpinnerPosition);
 
-        if (age == getResources().getInteger(R.integer.age18)) {
+        if (getString(R.string.age18).equals(age)) {
             checkRadioBox(R.id.age18);
-        } else if (age == getResources().getInteger(R.integer.age45)) {
+        } else if (getString(R.string.age45).equals(age)) {
             checkRadioBox(R.id.age45);
         }
 
@@ -97,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
             checkBoxList.add(R.id.feeTypePaid);
         }
         checkCheckBox(checkBoxList);
+        enableSwitch(slotConstraints.isEnabled());
+    }
+
+    private void enableSwitch(boolean isEnable) {
+        SwitchCompat switchCompat = findViewById(R.id.alertSwitch);
+        switchCompat.setChecked(isEnable);
     }
 
     private void checkCheckBox(List<Integer> checkBoxIds) {
@@ -111,57 +153,117 @@ public class MainActivity extends AppCompatActivity {
         radioButton.setChecked(true);
     }
 
-    public void createAlert(View view) {
+    private boolean createAlert() {
+        Spinner spinner = findViewById(R.id.districtNames);
+        int spinnerPosition = spinner.getSelectedItemPosition();
+        if (spinnerPosition == 0) {
+            Toast.makeText(MainActivity.this, getString(R.string.districtEmpty), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
+                .putBoolean(SlotConstraints.Fields.isEnabled, true)
+                .apply();
+
+        Toast.makeText(MainActivity.this, getString(R.string.alertCreated), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    private void disableAlert() {
+        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
+                .putBoolean(SlotConstraints.Fields.isEnabled, false)
+                .apply();
+    }
+
+    public void switchListener(View view) {
+        SwitchCompat switchCompat = (SwitchCompat) view;
+        if (switchCompat.isChecked()) {
+            switchCompat.setChecked(createAlert());
+        } else {
+            disableAlert();
+        }
+        refreshAlertDetails();
+    }
+
+    public void radioBoxListener(View view) {
+        RadioButton radioButton = (RadioButton) view;
+        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
+                .putString(SlotConstraints.getViewIdToType().get(radioButton.getId()), radioButton.getText().toString())
+                .apply();
+        refreshAlertDetails();
+    }
+
+    public void checkBoxClickListener(View view) {
+        CheckBox checkBox = (CheckBox) view;
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE);
+        String existingValue = sharedPreferences.getString(SlotConstraints.getViewIdToType().get(checkBox.getId()), null);
+        if (checkBox.isChecked()) {
+            if (!TextUtils.isEmpty(existingValue)) {
+                ArrayList<String> newValues = new ArrayList<>(Arrays.asList(existingValue.split(getString(R.string.comma))));
+                newValues.add(checkBox.getText().toString());
+                sharedPreferences.edit().putString(SlotConstraints.getViewIdToType().get(checkBox.getId()), String.join(getString(R.string.comma), newValues)).apply();
+            } else {
+                sharedPreferences.edit().putString(SlotConstraints.getViewIdToType().get(checkBox.getId()), checkBox.getText().toString()).apply();
+            }
+        } else {
+            if (!TextUtils.isEmpty(existingValue)) {
+                ArrayList<String> newValues = new ArrayList<>(Arrays.asList(existingValue.split(getString(R.string.comma))));
+                newValues.remove(checkBox.getText().toString());
+                sharedPreferences.edit().putString(SlotConstraints.getViewIdToType().get(checkBox.getId()), String.join(getString(R.string.comma), newValues)).apply();
+            } else {
+                sharedPreferences.edit().putString(SlotConstraints.getViewIdToType().get(checkBox.getId()), checkBox.getText().toString()).apply();
+            }
+        }
+        refreshAlertDetails();
+    }
+
+    public void checkAllSlots(View view) {
+        Button checkAllSlotsButton = (Button) view;
         Spinner spinner = findViewById(R.id.districtNames);
         int spinnerPosition = spinner.getSelectedItemPosition();
         if (spinnerPosition == 0) {
             Toast.makeText(MainActivity.this, getString(R.string.districtEmpty), Toast.LENGTH_SHORT).show();
             return;
         }
-        SlotConstraints slotConstraints = SlotConstraints.builder()
-                .districtName(spinner.getSelectedItem().toString())
-                .districtId(getResources().getIntArray(R.array.districtIds)[spinnerPosition])
-                .districtSpinnerPosition(spinnerPosition)
-                .age(Integer.parseInt(getRadioBoxValueFromGroup(R.id.age)))
-                .vaccine(getCheckBoxValues(Arrays.asList(R.id.COVISHIELD, R.id.COVAXIN, R.id.SPUTNIK)))
-                .feeType(getCheckBoxValues(Arrays.asList(R.id.feeTypeFree, R.id.feeTypePaid)))
-                .dose(getRadioBoxValueFromGroup(R.id.dose)).build();
-
-        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
-                .putString(SlotConstraints.Fields.districtName, slotConstraints.getDistrictName())
-                .putInt(SlotConstraints.Fields.districtId, slotConstraints.getDistrictId())
-                .putInt(SlotConstraints.Fields.districtSpinnerPosition, slotConstraints.getDistrictSpinnerPosition())
-                .putInt(SlotConstraints.Fields.age, slotConstraints.getAge())
-                .putString(SlotConstraints.Fields.vaccine, slotConstraints.getVaccine())
-                .putString(SlotConstraints.Fields.feeType, slotConstraints.getFeeType())
-                .putString(SlotConstraints.Fields.dose, slotConstraints.getDose())
-                .apply();
-
-        Toast.makeText(MainActivity.this, getString(R.string.alertCreated), Toast.LENGTH_SHORT).show();
-        refreshAlertDetails();
-    }
-
-    public void removeAlert(View view) {
-        getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit().clear().apply();
-        TextView textView = findViewById(R.id.alertDetails);
-        textView.setText(getString(R.string.alertDetails));
-    }
-
-    private String getCheckBoxValues(List<Integer> checkBoxIds) {
-        ArrayList<String> checkBoxValues = new ArrayList<>();
-        for (Integer checkBoxId : checkBoxIds) {
-            CheckBox checkBox = findViewById(checkBoxId);
-            if (checkBox.isChecked()) {
-                checkBoxValues.add(checkBox.getText().toString());
+        checkAllSlotsButton.setEnabled(false);
+        checkAllSlotsButton.setText(R.string.checking);
+        CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask(getResources());
+        coWinAsyncTask.doTask(new CoWinAsyncTask.ResultListener() {
+            @Override
+            public void onTaskSuccess(GetSlotsResponse result) {
+                List<AvailableCenter> availableCenters = SlotResponseHelper.filterByCapacity(result, getResources());
+                if (availableCenters.size() == 0) {
+                    Log.i("onTaskSuccess", getString(R.string.noCentersAvailable));
+                    createPopup(getString(R.string.noCentersAvailable), getString(R.string.tryAgainLater));
+                    checkAllSlotsButton.setEnabled(true);
+                    checkAllSlotsButton.setText(R.string.checkAllSlots);
+                    return;
+                }
+                Gson gson = new Gson();
+                String availableCentersJson = gson.toJson(availableCenters);
+                Intent centersActivityIntent = new Intent(getApplicationContext(), CentersActivity.class);
+                centersActivityIntent.putExtra(getString(R.string.availableCentersJson), availableCentersJson);
+                centersActivityIntent.putExtra(getString(R.string.centerViewTypeCheckAllSlots), true);
+                centersActivityIntent.putExtra(SlotConstraints.Fields.districtId, getResources().getIntArray(R.array.districtIds)[spinnerPosition]);
+                centersActivityIntent.putExtra(SlotConstraints.Fields.districtName, spinner.getSelectedItem().toString());
+                startActivity(centersActivityIntent);
+                checkAllSlotsButton.setEnabled(true);
+                checkAllSlotsButton.setText(R.string.checkAllSlots);
             }
-        }
-        return String.join(getString(R.string.comma), checkBoxValues);
+
+            @Override
+            public void onTaskFailure() {
+                createPopup(getString(R.string.someErrorOccurred), getString(R.string.tryAgainLater));
+                checkAllSlotsButton.setEnabled(true);
+                checkAllSlotsButton.setText(R.string.checkAllSlots);
+            }
+        }, getResources().getIntArray(R.array.districtIds)[spinnerPosition]);
     }
 
-    private String getRadioBoxValueFromGroup(Integer radioBoxGroupId) {
-        RadioGroup radioGroup = findViewById(radioBoxGroupId);
-        int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-        RadioButton radioButton = findViewById(selectedRadioButtonId);
-        return radioButton.getText().toString();
+    private void createPopup(String title, String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .show();
     }
 }
