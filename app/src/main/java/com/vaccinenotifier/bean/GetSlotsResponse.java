@@ -4,17 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class GetSlotsResponse {
 
     private List<Center> centers;
 
     @Getter
     @Setter
+    @Builder
     public static class Center {
         @SerializedName("center_id")
         private String centerId;
@@ -39,6 +42,7 @@ public class GetSlotsResponse {
 
     @Getter
     @Setter
+    @Builder
     public static class Session {
         @SerializedName("session_id")
         private String sessionId;
