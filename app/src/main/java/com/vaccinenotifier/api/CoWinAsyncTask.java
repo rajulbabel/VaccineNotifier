@@ -54,11 +54,13 @@ public class CoWinAsyncTask extends AsyncTask<Integer, Void, Object> {
         super.onPostExecute(result);
         if (result == null) {
             Log.e("onPostExecute", "empty response");
+            listener.onTaskFailure();
         } else if (result instanceof String) {
             Log.e("onPostExecute", (String) result);
+            listener.onTaskFailure();
         } else if (result instanceof IOException) {
             Log.e("onPostExecute", ((IOException) result).getMessage());
-            listener.onTaskFailure((IOException) result);
+            listener.onTaskFailure();
         } else if (result instanceof GetSlotsResponse) {
             listener.onTaskSuccess((GetSlotsResponse) result);
         }
@@ -67,7 +69,7 @@ public class CoWinAsyncTask extends AsyncTask<Integer, Void, Object> {
     public interface ResultListener {
         void onTaskSuccess(GetSlotsResponse result);
 
-        default void onTaskFailure(IOException e) {
+        default void onTaskFailure() {
         }
     }
 }

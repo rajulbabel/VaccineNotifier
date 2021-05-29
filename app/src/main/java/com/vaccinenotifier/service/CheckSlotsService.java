@@ -45,7 +45,7 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         slotConstraints = getSlotConstraints();
-        if (slotConstraints == null) {
+        if (slotConstraints == null || !slotConstraints.isEnabled()) {
             return;
         }
         CoWinAsyncTask coWinAsyncTask = new CoWinAsyncTask(getResources());
@@ -79,6 +79,7 @@ public class CheckSlotsService extends IntentService implements CoWinAsyncTask.R
         Gson gson = new Gson();
         String availableCentersJson = gson.toJson(availableCenters);
         centersIntent.putExtra(getString(R.string.availableCentersJson), availableCentersJson);
+        centersIntent.putExtra(getString(R.string.centerViewTypeCheckAllSlots), false);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, getResources().getInteger(R.integer.notifyId), centersIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         String channelId = getString(R.string.notifyChannelId);

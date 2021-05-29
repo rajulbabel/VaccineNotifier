@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.vaccinenotifier.R;
 import com.vaccinenotifier.bean.AvailableCenter;
+import com.vaccinenotifier.bean.SlotConstraints;
 
 import java.util.List;
 
@@ -23,9 +24,11 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.CentersV
 
     private Resources resources;
     private List<AvailableCenter> availableCenters;
+    private boolean displayAllSlots;
 
-    public CentersAdapter(Resources resources) {
+    public CentersAdapter(Resources resources, boolean displayAllSlots) {
         this.resources = resources;
+        this.displayAllSlots = displayAllSlots;
     }
 
     @NonNull
@@ -36,7 +39,11 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.CentersV
 
     @Override
     public void onBindViewHolder(@NonNull CentersViewHolder holder, int position) {
-        holder.bind(availableCenters.get(position));
+        if (displayAllSlots) {
+            holder.displayAllSlotsBind(availableCenters.get(position));
+        } else {
+            holder.bind(availableCenters.get(position));
+        }
     }
 
     @Override
@@ -62,7 +69,35 @@ public class CentersAdapter extends RecyclerView.Adapter<CentersAdapter.CentersV
             centerPincode.setText(resources.getString(R.string.centerPincodeDisplay) + availableCenter.getPincode());
             StringBuilder sessionData = new StringBuilder();
             for (AvailableCenter.AvailableSession session : availableCenter.getAvailableSessions()) {
-                sessionData.append(session.getDate()).append(": ").append(session.getVaccine()).append(" quantity: ").append(session.getAvailableCapacity()).append(resources.getString(R.string.newLine));
+                sessionData.append(session.getDate())
+                        .append(": ")
+                        .append(session.getVaccine())
+                        .append(" quantity: ")
+                        .append(session.getAvailableCapacity())
+                        .append(resources.getString(R.string.newLine));
+            }
+            sessionInfo.setText(sessionData.toString());
+        }
+
+        public void displayAllSlotsBind(AvailableCenter availableCenter) {
+            centerName.setText(resources.getString(R.string.centerNameDisplay) + availableCenter.getName());
+            centerPincode.setText(resources.getString(R.string.centerPincodeDisplay) + availableCenter.getPincode());
+            StringBuilder sessionData = new StringBuilder();
+            for (AvailableCenter.AvailableSession session : availableCenter.getAvailableSessions()) {
+                sessionData.append(resources.getString(R.string.smallTab)).append(session.getDate()).append(":")
+                        .append(resources.getString(R.string.newLine))
+                        .append(resources.getString(R.string.largeTab))
+                        .append(SlotConstraints.Fields.vaccine).append(": ").append(session.getVaccine())
+                        .append(resources.getString(R.string.newLine))
+                        .append(resources.getString(R.string.largeTab))
+                        .append(SlotConstraints.Fields.age).append(": ").append(session.getMinAgeLimit())
+                        .append(resources.getString(R.string.newLine))
+                        .append(resources.getString(R.string.largeTab))
+                        .append(resources.getString(R.string.dose1)).append(": ").append(session.getAvailableCapacityDose1())
+                        .append(resources.getString(R.string.newLine))
+                        .append(resources.getString(R.string.largeTab))
+                        .append(resources.getString(R.string.dose2)).append(": ").append(session.getAvailableCapacityDose2())
+                        .append(resources.getString(R.string.newLine));
             }
             sessionInfo.setText(sessionData.toString());
         }

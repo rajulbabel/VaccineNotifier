@@ -12,8 +12,9 @@ import java.util.List;
 
 public class SlotResponseHelper {
 
-    public static List<AvailableCenter> filter(GetSlotsResponse slotsResponse, int ageLimit, String vaccine, String feeType, String dose, Resources resources) {
+    public static List<AvailableCenter> filter(GetSlotsResponse slotsResponse, String age, String vaccine, String feeType, String dose, Resources resources) {
 
+        int ageLimit = Integer.parseInt(age);
         List<String> feeTypeList = null;
         if (!feeType.equals("")) {
             feeTypeList = Arrays.asList(feeType.split(","));
@@ -26,28 +27,29 @@ public class SlotResponseHelper {
             List<AvailableCenter.AvailableSession> availableSessions = new ArrayList<>();
             for (GetSlotsResponse.Session session : center.getSessions()) {
                 if (constraintChecks(session, ageLimit, vaccine, dose, resources)) {
-                    AvailableCenter.AvailableSession availableSession = new AvailableCenter.AvailableSession();
-                    availableSession.setVaccine(session.getVaccine());
-                    availableSession.setAvailableCapacity(getAvailableCapacity(dose, session, resources));
-                    availableSession.setDate(session.getDate());
-                    availableSessions.add(availableSession);
+                    availableSessions.add(AvailableCenter.AvailableSession.builder()
+                            .vaccine(session.getVaccine())
+                            .availableCapacity(getAvailableCapacity(dose, session, resources))
+                            .date(session.getDate())
+                            .minAgeLimit(session.getMinAgeLimit())
+                            .build());
                 }
             }
             if (availableSessions.size() > 0) {
-                AvailableCenter availableCenter = new AvailableCenter();
-                availableCenter.setName(center.getName());
-                availableCenter.setPincode(center.getPincode());
-                availableCenter.setAvailableSessions(availableSessions);
-                availableCenters.add(availableCenter);
+                availableCenters.add(AvailableCenter.builder()
+                        .name(center.getName())
+                        .pincode(center.getPincode())
+                        .availableSessions(availableSessions)
+                        .build());
             }
         }
         return availableCenters;
     }
 
     private static int getAvailableCapacity(String dose, GetSlotsResponse.Session session, Resources resources) {
-        if (dose.equals(resources.getString(R.string.dose1))) {
+        if (resources.getString(R.string.dose1).equals(dose)) {
             return session.getAvailableCapacityDose1();
-        } else if (dose.equals(resources.getString(R.string.dose2))) {
+        } else if (resources.getString(R.string.dose2).equals(dose)) {
             return session.getAvailableCapacityDose2();
         }
         return session.getAvailableCapacity();
@@ -65,5 +67,32 @@ public class SlotResponseHelper {
             vaccineList = Arrays.asList(vaccine.split(","));
         }
         return vaccineList == null || vaccineList.contains(session.getVaccine().toUpperCase());
+    }
+
+    public static List<AvailableCenter> filterByCapacity(GetSlotsResponse slotsResponse, Resources resources) {
+        List<AvailableCenter> availableCenters = new ArrayList<>();
+        for (GetSlotsResponse.Center center : slotsResponse.getCenters()) {
+            List<AvailableCenter.AvailableSession> availableSessions = new ArrayList<>();
+            for (GetSlotsResponse.Session session : center.getSessions()) {
+                int availableCapacity = getAvailableCapacity(null, session, resources);
+                if (availableCapacity > 0) {
+                    availableSessions.add(AvailableCenter.AvailableSession.builder()
+                            .vaccine(session.getVaccine())
+                            .availableCapacityDose1(session.getAvailableCapacityDose1())
+                            .availableCapacityDose2(session.getAvailableCapacityDose2())
+                            .date(session.getDate())
+                            .minAgeLimit(session.getMinAgeLimit())
+                            .build());
+                }
+            }
+            if (availableSessions.size() > 0) {
+                availableCenters.add(AvailableCenter.builder()
+                        .name(center.getName())
+                        .pincode(center.getPincode())
+                        .availableSessions(availableSessions)
+                        .build());
+            }
+        }
+        return availableCenters;
     }
 }

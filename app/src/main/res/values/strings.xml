@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Vaccine Notifier</string>
 
-    <integer name="age18">18</integer>
-    <integer name="age45">45</integer>
+    <string name="age18">18</string>
+    <string name="age45">45</string>
 
     <string name="COVISHIELD">COVISHIELD</string>
     <string name="COVAXIN">COVAXIN</string>
@@ -17,32 +17,42 @@
     <integer name="defaultDistrictId">0</integer>
     <string name="defaultDistrictName" />
     <integer name="districtSpinnerPosition">0</integer>
-    <integer name="defaultAge">18</integer>
-    <string name="defaultVaccine" />
-    <string name="defaultFeeType" />
+    <string name="defaultAge">18</string>
+    <string name="defaultVaccine">COVISHIELD,COVAXIN,SPUTNIK</string>
+    <string name="defaultFeeType">Free,Paid</string>
     <string name="defaultDose">Dose1</string>
 
     <integer name="cronIntervalMs">600000</integer>
     <string name="alertsSharedPreferencesName">Alerts</string>
     <string name="availableCentersJson">availableCentersJson</string>
+    <string name="centerViewTypeNotification">centerViewTypeNotification</string>
+    <string name="centerViewTypeCheckAllSlots">centerViewTypeCheckAllSlots</string>
 
     <string name="coWinBaseUrl">https://cdn-api.co-vin.in</string>
     <string name="coWinDateFormat">dd-MM-yyyy</string>
     <string name="httpAgent">http.agent</string>
     <string name="createAlert">Create Alert</string>
-    <string name="alertDetails">No alerts set</string>
+    <string name="alertDetails"><b>No alerts set</b></string>
     <string name="alertCreated">Alert Created</string>
     <string name="districtEmpty">Please select district</string>
-    <string name="centerNameDisplay">Center Name: </string>
-    <string name="centerPincodeDisplay">Center Pincode: </string>
+    <string name="centerNameDisplay">Center Name:\u0009</string>
+    <string name="centerPincodeDisplay">Center Pincode:\u0009</string>
     <string name="noCentersAvailable">No centers available</string>
-    <string name="notificationTitle">-Centers Available!!, Click/Expand to check centers</string>
+    <string name="someErrorOccurred">Some Error Occurred In CoWin API</string>
+    <string name="tryAgainLater">Please try again later!</string>
+    <string name="notificationTitle">\u0009Centers Available!!, Click/Expand to check centers</string>
+    <string name="alertConfigDisplayString"><b>Alerts set with configuration:</b>\n\n</string>
+    <string name="alertsDescription">District Name: %1$s\nAge: %2$s\nVaccine: %3$s\nFee Type: %4$s\nDose: %5$s</string>
     <string name="notifyChannelId">vaccine_notifier</string>
     <integer name="notifyId">1995</integer>
     <string name="backgroundNotifyChannelId">vaccine_notifier_background</string>
     <string name="comma">,</string>
     <string name="newLine">\n</string>
-    <string name="removeAlert">Remove Alert</string>
+    <string name="smallTab">\u0009\u0009\u0009</string>
+    <string name="largeTab">\u0009\u0009\u0009\u0009\u0009\u0009</string>
+    <string name="checkAllSlots">Check Now</string>
+    <string name="alertNotification">Alert Notification</string>
+    <string name="checking">Checking..</string>
 
     <string-array name="districtNames">
         <item>Select District</item>
@@ -276,7 +286,7 @@
         <item>Ganjam</item>
         <item>Garhwa</item>
         <item>Gariaband</item>
-        <item>Gaurela Pendra Marwahi </item>
+        <item>Gaurela Pendra Marwahi</item>
         <item>Gautam Buddha Nagar</item>
         <item>Gaya</item>
         <item>Ghaziabad</item>

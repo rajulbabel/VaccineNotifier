@@ -33,7 +33,7 @@ public class CentersActivity extends AppCompatActivity {
             availableCenterList.add(gson.fromJson(jsonElement, AvailableCenter.class));
         }
 
-        CentersAdapter centersAdapter = new CentersAdapter(getResources());
+        CentersAdapter centersAdapter = new CentersAdapter(getResources(), getIntent().getExtras().getBoolean(getString(R.string.centerViewTypeCheckAllSlots)));
         centersAdapter.setAvailableCenters(availableCenterList);
         recyclerView.setAdapter(centersAdapter);
     }
