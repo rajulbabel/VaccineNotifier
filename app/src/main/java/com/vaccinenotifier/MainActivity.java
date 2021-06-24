@@ -62,14 +62,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         refreshAlertDetails();
-        scheduleAlarm();
     }
 
-    private void scheduleAlarm() {
+    private void scheduleAlarm(boolean enable) {
         Intent intent = new Intent(getApplicationContext(), BroadcastReceiverImpl.class);
         final PendingIntent pIntent = PendingIntent.getBroadcast(this, BroadcastReceiverImpl.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), getResources().getInteger(R.integer.cronIntervalMs), pIntent);
+        if (enable) {
+            alarm.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), getResources().getInteger(R.integer.cronIntervalMs), pIntent);
+        } else {
+            alarm.cancel(pIntent);
+        }
     }
 
     private void refreshAlertDetails() {
@@ -139,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
     private void enableSwitch(boolean isEnable) {
         SwitchCompat switchCompat = findViewById(R.id.alertSwitch);
         switchCompat.setChecked(isEnable);
+        scheduleAlarm(isEnable);
     }
 
     private void checkCheckBox(List<Integer> checkBoxIds) {
@@ -173,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         getSharedPreferences(getString(R.string.alertsSharedPreferencesName), Context.MODE_PRIVATE).edit()
                 .putBoolean(SlotConstraints.Fields.isEnabled, false)
                 .apply();
+        Toast.makeText(MainActivity.this, getString(R.string.alertDisabled), Toast.LENGTH_SHORT).show();
     }
 
     public void switchListener(View view) {

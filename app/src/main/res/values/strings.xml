@@ -22,7 +22,7 @@
     <string name="defaultFeeType">Free,Paid</string>
     <string name="defaultDose">Dose1</string>
 
-    <integer name="cronIntervalMs">600000</integer>
+    <integer name="cronIntervalMs">60000</integer>
     <string name="alertsSharedPreferencesName">Alerts</string>
     <string name="availableCentersJson">availableCentersJson</string>
     <string name="centerViewTypeNotification">centerViewTypeNotification</string>
@@ -34,6 +34,7 @@
     <string name="createAlert">Create Alert</string>
     <string name="alertDetails"><b>No alerts set</b></string>
     <string name="alertCreated">Alert Created</string>
+    <string name="alertDisabled">Alert Disabled</string>
     <string name="districtEmpty">Please select district</string>
     <string name="centerNameDisplay">Center Name: %1$s</string>
     <string name="centerPincodeDisplay">Center Pincode: %1$s</string>
